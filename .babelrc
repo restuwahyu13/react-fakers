@@ -1,0 +1,38 @@
+{
+  "env": {
+    "test": {
+      "presets": [
+        ["@babel/preset-env", { "useBuiltIns": "usage", "corejs": 3, "bugfixes": true, "forceAllTransforms": true }],
+        ["@babel/preset-react", { "useBuiltIns": true }],
+        "jest"
+      ],
+      "plugins": [
+        "@babel/plugin-transform-modules-commonjs",
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-syntax-dynamic-import"
+      ],
+      "ignore": [
+        "/(node_modules|bower_components)/",
+        "**/build/**/*",
+        "**/public/**/*",
+        "**/webpack/**/*",
+        "**/.github/**/*",
+        "**/coverage/**/*",
+        ".eslintrc",
+        ".stylelintrc",
+        ".prettierrc",
+        ".browserslistrc",
+        ".editorconfig",
+        "babel.babel.custom.config.js",
+        "vendors.js",
+        "postcss.config.js",
+        "webpack.config.js",
+        "package.json",
+        "package-lock.json",
+        "README.md",
+        "LICENSE.md",
+        ".gitignore"
+      ]
+    }
+  }
+}
