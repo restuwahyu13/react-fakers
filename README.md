@@ -27,87 +27,87 @@ npm i react-fakers | yarn add react-fakers
 
 ### EXAMPLE USAGE
 
-- #### Hooks
+- **Hooks**
 
-  - #### **useFaker**
+- **useFaker**
 
-  ```js
-  import React, { useState, useEffect } from 'react'
-  import { useFaker } from 'react-fakers'
+```js
+import React, { useState, useEffect } from 'react'
+import { useFaker } from 'react-fakers'
 
-  const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useFaker()
+const App = () => {
+  const [state, setState] = useState(false)
+  const { success, error } = useFaker()
 
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
-
-    if (error) {
-      window.alert(error.message)
+  useEffect(() => {
+    if (success) {
+      setState(true)
     }
+  }, [])
 
-    return (
-      <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={val.uuid}>
-              <li>
-                {val.firstname} {val.lastname} - {val.email}
-              </li>
-            </ul>
-          ))}
-      </>
-    )
+  if (error) {
+    window.alert(error.message)
   }
 
-  export default App
-  ```
+  return (
+    <>
+      {!state && <h4>Loading....</h4>}
+      {state &&
+        success.map((val, id) => (
+          <ul key={val.uuid}>
+            <li>
+              {val.firstname} {val.lastname} - {val.email}
+            </li>
+          </ul>
+        ))}
+    </>
+  )
+}
 
-  - #### **useJsonPlaceHolder**
+export default App
+```
 
-  ```js
-  import React, { useState, useEffect } from 'react'
-  import { useJsonPlaceHolder } from 'react-fakers'
+- **useJsonPlaceHolder**
 
-  const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useJsonPlaceHolder()
+```js
+import React, { useState, useEffect } from 'react'
+import { useJsonPlaceHolder } from 'react-fakers'
 
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
+const App = () => {
+  const [state, setState] = useState(false)
+  const { success, error } = useJsonPlaceHolder()
 
-    if (error) {
-      window.alert(error.message)
+  useEffect(() => {
+    if (success) {
+      setState(true)
     }
+  }, [])
 
-    return (
-      <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={id}>
-              <li>
-                {val.name} - {val.email}
-              </li>
-            </ul>
-          ))}
-      </>
-    )
+  if (error) {
+    window.alert(error.message)
   }
 
-  export default App
-  ```
+  return (
+    <>
+      {!state && <h4>Loading....</h4>}
+      {state &&
+        success.map((val, id) => (
+          <ul key={id}>
+            <li>
+              {val.name} - {val.email}
+            </li>
+          </ul>
+        ))}
+    </>
+  )
+}
 
-- #### Components
+export default App
+```
 
-  - #### **Faker**
+- **Components**
+
+  - **Faker**
 
   ```js
   import React, { Component } from 'react'
@@ -156,7 +156,7 @@ npm i react-fakers | yarn add react-fakers
   export default App
   ```
 
-  - #### **JsonPlaceHolder**
+  - **JsonPlaceHolder**
 
   ```js
   import React, { Component } from 'react'
@@ -207,7 +207,7 @@ npm i react-fakers | yarn add react-fakers
 
 ### API REFERENCE
 
-- ### HOOKS
+- **HOOKS**
 
 | Name                   | Property | Type Data | Optional/Required | Default Value                       | Description                                          |
 | ---------------------- | -------- | --------- | ----------------- | ----------------------------------- | ---------------------------------------------------- |
@@ -225,7 +225,7 @@ npm i react-fakers | yarn add react-fakers
 | **useUIFaces**         | apiKey   | _string_  | _optional_        | 43651248-182440F6-8653E4E2-5438FCB2 | To display dummy data from the UI Faces API          |
 |                        | params   | _object_  | _optional_        | { limit: 10 }                       |                                                      |
 
-- #### COMPONENTS
+- **COMPONENTS**
 
 | Name                | Property | Type Data  | Optional/Required | Default Value                       | Description                                          |
 | ------------------- | -------- | ---------- | ----------------- | ----------------------------------- | ---------------------------------------------------- |
