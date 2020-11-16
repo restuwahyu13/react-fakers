@@ -29,81 +29,81 @@ npm i react-fakers | yarn add react-fakers
 
 - **Hooks**
 
-- **useFaker**
+  - **useFaker**
 
-```js
-import React, { useState, useEffect } from 'react'
-import { useFaker } from 'react-fakers'
+  ```js
+  import React, { useState, useEffect } from 'react'
+  import { useFaker } from 'react-fakers'
 
-const App = () => {
-  const [state, setState] = useState(false)
-  const { success, error } = useFaker()
+  const App = () => {
+    const [state, setState] = useState(false)
+    const { success, error } = useFaker()
 
-  useEffect(() => {
-    if (success) {
-      setState(true)
+    useEffect(() => {
+      if (success) {
+        setState(true)
+      }
+    }, [])
+
+    if (error) {
+      window.alert(error.message)
     }
-  }, [])
 
-  if (error) {
-    window.alert(error.message)
+    return (
+      <>
+        {!state && <h4>Loading....</h4>}
+        {state &&
+          success.map((val, id) => (
+            <ul key={val.uuid}>
+              <li>
+                {val.firstname} {val.lastname} - {val.email}
+              </li>
+            </ul>
+          ))}
+      </>
+    )
   }
 
-  return (
-    <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={val.uuid}>
-            <li>
-              {val.firstname} {val.lastname} - {val.email}
-            </li>
-          </ul>
-        ))}
-    </>
-  )
-}
+  export default App
+  ```
 
-export default App
-```
+  - **useJsonPlaceHolder**
 
-- **useJsonPlaceHolder**
+  ```js
+  import React, { useState, useEffect } from 'react'
+  import { useJsonPlaceHolder } from 'react-fakers'
 
-```js
-import React, { useState, useEffect } from 'react'
-import { useJsonPlaceHolder } from 'react-fakers'
+  const App = () => {
+    const [state, setState] = useState(false)
+    const { success, error } = useJsonPlaceHolder()
 
-const App = () => {
-  const [state, setState] = useState(false)
-  const { success, error } = useJsonPlaceHolder()
+    useEffect(() => {
+      if (success) {
+        setState(true)
+      }
+    }, [])
 
-  useEffect(() => {
-    if (success) {
-      setState(true)
+    if (error) {
+      window.alert(error.message)
     }
-  }, [])
 
-  if (error) {
-    window.alert(error.message)
+    return (
+      <>
+        {!state && <h4>Loading....</h4>}
+        {state &&
+          success.map((val, id) => (
+            <ul key={id}>
+              <li>
+                {val.name} - {val.email}
+              </li>
+            </ul>
+          ))}
+      </>
+    )
   }
 
-  return (
-    <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={id}>
-            <li>
-              {val.name} - {val.email}
-            </li>
-          </ul>
-        ))}
-    </>
-  )
-}
-
-export default App
-```
+  export default App
+  ```
 
 - **Components**
 
