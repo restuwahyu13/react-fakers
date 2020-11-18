@@ -2,37 +2,42 @@
 
 **React Fakers** adalah kumpulan dummy data dari berbagai sumber layanan penyedia dummy data terpopuler seperti **Json Place Holder, Faker, Pokemon dll**, untuk keperluan testing pengembangan aplikasi.
 
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md) [![Build Status](https://travis-ci.com/restuwahyu13/react-fakers.svg?branch=main)](https://travis-ci.com/restuwahyu13/react-fakers) [![npm version](https://badge.fury.io/js/react-fakers.svg)](https://badge.fury.io/js/react-fakers) ![npm bundle size](https://img.shields.io/bundlephobia/min/react-fakers) ![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/react-fakers/1.0.1-rc1) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/restuwahyu13/react-fakers) ![npm](https://img.shields.io/npm/dm/react-fakers) [![Open Source Helpers](https://www.codetriage.com/restuwahyu13/react-fakers/badges/users.svg)](https://www.codetriage.com/restuwahyu13/react-fakers)
+
 <img src="./cover.png" alt="logo" width="850" height="750" style="object-fit:cover"/>
 
 ## TABLE OF CONTENT
 
 - [Get Started](#get-started)
-	* [Installation](#INSTALLATION)
-	* [Example Usage](#EXAMPLE-USAGE)
-	* [API Reference](#API-REFERENCE)
-	* [API Status](#API-STATUS)
-	* [API List](#API-LIST)
-  * [Translation](#TRANSLATION)
-  * [Notes](#NOTES)
-  * [Author](#AUTHOR)
-  * [Contributors](#CONTRIBUTORS)
-  * [Bugs](#BUGS)
-  * [License](#change)
+  - [Installation](#INSTALLATION)
+  - [Example Usage](#EXAMPLE-USAGE)
+  - [API Reference](#API-REFERENCE)
+  - [API Status](#API-STATUS)
+  - [API List](#API-LIST)
+  - [Translation](#TRANSLATION)
+  - [Notes](#NOTES)
+  - [Contributing](#CONTRIBUTING)
+  - [Bugs](#BUGS)
+  - [Author](#AUTHOR)
+  - [License](#LICENSE))
 
 ### INSTALLATION:
 
 ```sh
 npm i react-fakers | yarn add react-fakers
 ```
+
 ### EXAMPLE USAGE
 
 - #### Hooks
-  + #### **useFaker** 
+
+  - #### **useFaker**
+
   ```js
-    import React, { useState, useEffect } from 'react'
-    import { useFaker } from 'react-fakers'
-    
-    const App = () => {
+  import React, { useState, useEffect } from 'react'
+  import { useFaker } from 'react-fakers'
+
+  const App = () => {
     const [state, setState] = useState(false)
     const { success, error } = useFaker()
 
@@ -63,12 +68,14 @@ npm i react-fakers | yarn add react-fakers
 
   export default App
   ```
-   + #### **useJsonPlaceHolder** 
+
+  - #### **useJsonPlaceHolder**
+
   ```js
-    import React, { useState, useEffect } from 'react'
-    import { useJsonPlaceHolder } from 'react-fakers'
-    
-    const App = () => {
+  import React, { useState, useEffect } from 'react'
+  import { useJsonPlaceHolder } from 'react-fakers'
+
+  const App = () => {
     const [state, setState] = useState(false)
     const { success, error } = useJsonPlaceHolder()
 
@@ -99,149 +106,150 @@ npm i react-fakers | yarn add react-fakers
 
   export default App
   ```
+
 - #### Components
 
-  + #### **Faker** 
+  - #### **Faker**
+
   ```js
-    import React, { Component } from 'react'
-    import { Faker } from 'react-fakers'
-    
-    class App extends Component {
-    
-      constructor(props) {
-        super(props)
-        this.state = {
-          loading: false,
-          data: []
-        }
-      }
+  import React, { Component } from 'react'
+  import { Faker } from 'react-fakers'
 
-      onSuccess = (res) => {
-        this.setState({
-          loading: true,
-          data: res
-        })
+  class App extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        loading: false,
+        data: []
       }
+    }
 
-      onError = (error) => {
-        if (error) {
-          window.alert(error.message)
-        }
-      }
+    onSuccess = (res) => {
+      this.setState({
+        loading: true,
+        data: res
+      })
+    }
 
-      render() {
-        return (
-          <>
-            <Faker success={this.onSuccess} error={this.onError} />
-            {!this.state.loading && <h4>Loading....</h4>}
-            {this.state.loading &&
-              this.state.data.map((val, id) => (
-                <ul key={val.uuid}>
-                  <li>
-                    {val.firstname} {val.lastname} - {val.email}
-                  </li>
-                </ul>
-              ))}
-          </>
-        )
+    onError = (error) => {
+      if (error) {
+        window.alert(error.message)
       }
+    }
+
+    render() {
+      return (
+        <>
+          <Faker success={this.onSuccess} error={this.onError} />
+          {!this.state.loading && <h4>Loading....</h4>}
+          {this.state.loading &&
+            this.state.data.map((val, id) => (
+              <ul key={val.uuid}>
+                <li>
+                  {val.firstname} {val.lastname} - {val.email}
+                </li>
+              </ul>
+            ))}
+        </>
+      )
+    }
   }
 
   export default App
   ```
-  
-    + #### **JsonPlaceHolder** 
+
+  - #### **JsonPlaceHolder**
+
   ```js
-    import React, { Component } from 'react'
-    import { Faker } from 'react-fakers'
-    
-    class App extends Component {
-    
-      constructor(props) {
-        super(props)
-        this.state = {
-          loading: false,
-          data: []
-        }
-      }
+  import React, { Component } from 'react'
+  import { Faker } from 'react-fakers'
 
-       onSuccess = (res) => {
-        this.setState({
-          loading: true,
-          data: res
-        })
+  class App extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        loading: false,
+        data: []
       }
-
-       onError = (error) => {
-        if (error) {
-          window.alert(error.message)
-        }
-      }
-
-        render() {
-          return (
-            <>
-              <JsonPlaceHolder success={this.onSuccess} error={this.onError} />
-              {!this.state.loading && <h4>Loading....</h4>}
-              {this.state.loading &&
-                this.state.data.map((val, id) => (
-                  <ul key={id}>
-                    <li>
-                      {val.name} - {val.email}
-                    </li>
-                  </ul>
-                ))}
-            </>
-          )
-        }
     }
+
+    onSuccess = (res) => {
+      this.setState({
+        loading: true,
+        data: res
+      })
+    }
+
+    onError = (error) => {
+      if (error) {
+        window.alert(error.message)
+      }
+    }
+
+    render() {
+      return (
+        <>
+          <JsonPlaceHolder success={this.onSuccess} error={this.onError} />
+          {!this.state.loading && <h4>Loading....</h4>}
+          {this.state.loading &&
+            this.state.data.map((val, id) => (
+              <ul key={id}>
+                <li>
+                  {val.name} - {val.email}
+                </li>
+              </ul>
+            ))}
+        </>
+      )
+    }
+  }
 
   export default App
   ```
-  
+
 ### API REFERENCE
 
-+ ### HOOKS
+- ### HOOKS
 
 | Name                   | Property | Type Data | Optional/Required | Default Value                       | Description                                             |
 | ---------------------- | -------- | --------- | ----------------- | ----------------------------------- | ------------------------------------------------------- |
-| **useFaker**           | type     | *string*  | *optional*        | users                               | Untuk menampilkan dummy data dari Faker API             |
-|                        | params   | *object*  | *optional*        | { }                                 |                                                         |
-| **useJsonPlaceHolder** | type     | *string*  | *optional*        | users                               | Untuk menampilkan dummy data dari Json Place Holder API |
-|                        | params   | *object*  | *optional*        | { }                                 |                                                         |
-|                        | options  | *object*  | *optional*        | { limit: 0 }                        |                                                         |
-|                        | filters  | *object*  | *optional*        | { }                                 |                                                         |
-| **useDummy**           | type     | *object*  | *optional*        | user                                | Untuk menampilkan dummy data dari Dummy API             |
-|                        | apiKey   | *string*  | *optional*        | 5faa1fab5317ae96860c0be3            |                                                         |
-|                        | params   | *object*  | *optional*        | {  }                                |                                                         |
-|                        | options  | *object*  | *optional*        | { limit: 0 }                        |                                                         |
-|                        | filters  | *object*  | *optional*        | { }                                 |                                                         |
-| **useUIFaces**         | apiKey   | *string*  | *optional*        | 43651248-182440F6-8653E4E2-5438FCB2 | Untuk menampilkan dummy data dari UI Faces API          |
-|                        | params   | *object*  | *optional*        | { limit: 10 }                       |                                                         |
+| **useFaker**           | type     | _string_  | _optional_        | users                               | Untuk menampilkan dummy data dari Faker API             |
+|                        | params   | _object_  | _optional_        | { }                                 |                                                         |
+| **useJsonPlaceHolder** | type     | _string_  | _optional_        | users                               | Untuk menampilkan dummy data dari Json Place Holder API |
+|                        | params   | _object_  | _optional_        | { }                                 |                                                         |
+|                        | options  | _object_  | _optional_        | { limit: 0 }                        |                                                         |
+|                        | filters  | _object_  | _optional_        | { }                                 |                                                         |
+| **useDummy**           | type     | _object_  | _optional_        | user                                | Untuk menampilkan dummy data dari Dummy API             |
+|                        | apiKey   | _string_  | _optional_        | 5faa1fab5317ae96860c0be3            |                                                         |
+|                        | params   | _object_  | _optional_        | { }                                 |                                                         |
+|                        | options  | _object_  | _optional_        | { limit: 0 }                        |                                                         |
+|                        | filters  | _object_  | _optional_        | { }                                 |                                                         |
+| **useUIFaces**         | apiKey   | _string_  | _optional_        | 43651248-182440F6-8653E4E2-5438FCB2 | Untuk menampilkan dummy data dari UI Faces API          |
+|                        | params   | _object_  | _optional_        | { limit: 10 }                       |                                                         |
 
-+ #### COMPONENTS
+- #### COMPONENTS
 
 | Name                | Property | Type Data  | Optional/Required | Default Value                       | Description                                             |
 | ------------------- | -------- | ---------- | ----------------- | ----------------------------------- | ------------------------------------------------------- |
-| **Faker**           | success  | *function* | *required*        |                                     | Untuk menampilkan dummy data dari Faker API             |
-|                     | error    | *function* | *optional*        |                                     |                                                         |
-|                     | type     | *string*   | *optional*        | users                               |                                                         |
-|                     | params   | *object*   | *optional*        |                                     |                                                         |
-| **JsonPlaceHolder** | success  | *function* | *required*        |                                     | Untuk menampilkan dummy data dari Json Place Holder API |
-|                     | error    | *function* | *optional*        |                                     |                                                         |
-|                     | type     | *string*   | *optional*        | users                               |                                                         |
-|                     | options  | *object*   | *optional*        | { limit: 0 }                        |                                                         |
-|                     | filters  | *object*   | *optional*        | { }                                 |                                                         |
-| **Dummy**           | success  | *function* | *required*        |                                     | Untuk menampilkan dummy data dari Dummy API             |
-|                     | error    | *function* | *optional*        |                                     |                                                         |
-|                     | apiKey   | *string*   | *optional*        | 5faa1fab5317ae96860c0be3            |                                                         |
-|                     | params   | *object*   | *optional*        | {  }                                |                                                         |
-|                     | options  | *object*   | *optional*        | { limit: 0 }                        |                                                         |
-|                     | filters  | *object*   | *optional*        | { }                                 |                                                         |
-| **UIFaces**         | success  | *function* | *required*        |                                     | Untuk menampilkan dummy data dari UI Faces API          |
-|                     | error    | *function* | *optional*        |                                     |                                                         |
-|                     | apiKey   | *string*   | *optional*        | 43651248-182440F6-8653E4E2-5438FCB2 |                                                         |
-|                     | params   | *object*   | *optional*        | { limit: 10 }                       |                                                         |
+| **Faker**           | success  | _function_ | _required_        |                                     | Untuk menampilkan dummy data dari Faker API             |
+|                     | error    | _function_ | _optional_        |                                     |                                                         |
+|                     | type     | _string_   | _optional_        | users                               |                                                         |
+|                     | params   | _object_   | _optional_        |                                     |                                                         |
+| **JsonPlaceHolder** | success  | _function_ | _required_        |                                     | Untuk menampilkan dummy data dari Json Place Holder API |
+|                     | error    | _function_ | _optional_        |                                     |                                                         |
+|                     | type     | _string_   | _optional_        | users                               |                                                         |
+|                     | options  | _object_   | _optional_        | { limit: 0 }                        |                                                         |
+|                     | filters  | _object_   | _optional_        | { }                                 |                                                         |
+| **Dummy**           | success  | _function_ | _required_        |                                     | Untuk menampilkan dummy data dari Dummy API             |
+|                     | error    | _function_ | _optional_        |                                     |                                                         |
+|                     | apiKey   | _string_   | _optional_        | 5faa1fab5317ae96860c0be3            |                                                         |
+|                     | params   | _object_   | _optional_        | { }                                 |                                                         |
+|                     | options  | _object_   | _optional_        | { limit: 0 }                        |                                                         |
+|                     | filters  | _object_   | _optional_        | { }                                 |                                                         |
+| **UIFaces**         | success  | _function_ | _required_        |                                     | Untuk menampilkan dummy data dari UI Faces API          |
+|                     | error    | _function_ | _optional_        |                                     |                                                         |
+|                     | apiKey   | _string_   | _optional_        | 43651248-182440F6-8653E4E2-5438FCB2 |                                                         |
+|                     | params   | _object_   | _optional_        | { limit: 10 }                       |                                                         |
 
 ### API STATUS
 
@@ -250,7 +258,7 @@ npm i react-fakers | yarn add react-fakers
 | Faker             | No      | Unlimited    | unlimited      |
 | Json Place Holder | No      | Unlimited    | unlimited      |
 | Dummy API         | Yes     | 500          | undefined      |
-| UI Faces          | Yes     | 500          | undefined      | 
+| UI Faces          | Yes     | 500          | undefined      |
 
 ### API LIST
 
@@ -269,7 +277,7 @@ npm i react-fakers | yarn add react-fakers
 | Anime             | Comingsoon | [Click Here]()                             |
 | Ricky And Morty   | Comingsoon | [Click Here]()                             |
 | Unsplash          | Comingsoon | [Click Here]()                             |
-| Listen Notes      | Comingsoon | [Click Here]()                             | 
+| Listen Notes      | Comingsoon | [Click Here]()                             |
 
 ### TRANSLATION
 
@@ -283,14 +291,20 @@ npm i react-fakers | yarn add react-fakers
 - Untuk melakukan kontribusi project anda bisa melemparkan `issue` atau anda bisa mengcloning repository dan melakukan `Pull Request`
 - Untuk cara penggunaan lebih lanjut anda bisa membuka folder `app-dev/src/examples` di repository ini
 
-### AUTHOR
-- [Restu Wahyu Saputra](https://github.com/restuwahyu13)
+### CONTRIBUTING
+
+Ingin membuat **React Fakers** lebih sempurna? Mari berkontribusi dan ikuti [panduan kontribusi.](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md)
 
 ### BUGS
 
 Untuk informasi mengenai bugs terkait package library silakan [klik disini](https://github.com/restuwahyu13/react-fakers/issues)
 
+### AUTHOR
+
+- [Restu Wahyu Saputra](https://github.com/restuwahyu13)
+
 ### LICENSE
+
 - [MIT](https://github.com/restuwahyu13/react-fakers/blob/main/LICENSE.md)
 
 <p align="right" style="padding: 5px; border-radius: 100%; background-color: red; font-size: 2rem;">

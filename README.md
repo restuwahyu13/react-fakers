@@ -2,7 +2,7 @@
 
 **React Fakers** is a collection of dummy data from the most popular dummy data providers such as **Json Place Holder, Faker, Pokemon, etc**, for application development testing.
 
-[![Build Status](https://travis-ci.com/restuwahyu13/react-fakers.svg?branch=main)](https://travis-ci.com/restuwahyu13/react-fakers) [![npm version](https://badge.fury.io/js/react-fakers.svg)](https://badge.fury.io/js/react-fakers)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md) [![Build Status](https://travis-ci.com/restuwahyu13/react-fakers.svg?branch=main)](https://travis-ci.com/restuwahyu13/react-fakers) [![npm version](https://badge.fury.io/js/react-fakers.svg)](https://badge.fury.io/js/react-fakers) ![npm bundle size](https://img.shields.io/bundlephobia/min/react-fakers) ![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/react-fakers/1.0.1-rc1) ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/restuwahyu13/react-fakers) ![npm](https://img.shields.io/npm/dm/react-fakers) [![Open Source Helpers](https://www.codetriage.com/restuwahyu13/react-fakers/badges/users.svg)](https://www.codetriage.com/restuwahyu13/react-fakers)
 
 <img src="./cover.png" alt="logo" width="850" height="750" style="object-fit:cover"/>
 
@@ -16,9 +16,9 @@
   - [API List](#API-LIST)
   - [Translation](#TRANSLATION)
   - [Notes](#NOTES)
-  - [Author](#AUTHOR)
-  - [Contributors](#CONTRIBUTORS)
+  - [Contributing](#CONTRIBUTING)
   - [Bugs](#BUGS)
+  - [Author](#AUTHOR)
   - [License](#LICENSE)
 
 ### INSTALLATION:
@@ -291,13 +291,17 @@ npm i react-fakers | yarn add react-fakers
 - To make a contribution to the project you can throw an `issue` or you can clone the repository and perform a `Pull Request`
 - To find out more about using this tool, you can open the `app-dev/src/examples` in this repository
 
-### AUTHOR
+### CONTRIBUTING
 
-- [Restu Wahyu Saputra](https://github.com/restuwahyu13)
+Want to make **React Fakers** more perfect? Let's contribute and follow the [contribution guide.](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md)
 
 ### BUGS
 
 For information on bugs related to package libraries, please visit [here](https://github.com/restuwahyu13/react-fakers/issues)
+
+### AUTHOR
+
+- [Restu Wahyu Saputra](https://github.com/restuwahyu13)
 
 ### LICENSE
 
