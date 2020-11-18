@@ -8,8 +8,6 @@
     "test": "jest --runInBand --detectOpenHandles",
     "test:watch": "jest --watchAll --runInBand --detectOpenHandles",
     "test:coverage": "jest --coverage --colors",
-    "test:codecov": "jest --detectOpenHandles && codecov",
-    "test:coveralls": "jest --detectOpenHandles  --coverage && coveralls < coverage/lcov.info",
     "lint": "eslint ./src --fix",
     "formatter": "prettier --check ./src"
   },
@@ -76,8 +74,6 @@
     "compression-webpack-plugin": "^6.1.1",
     "core-js": "^3.7.0",
     "cross-env": "^7.0.2",
-    "codecov": "^3.8.1",
-    "coveralls": "^3.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "enzyme-to-json": "^3.6.1",

@@ -2,6 +2,8 @@
 
 **React Fakers** is a collection of dummy data from the most popular dummy data providers such as **Json Place Holder, Faker, Pokemon, etc**, for application development testing.
 
+[![Build Status](https://travis-ci.com/restuwahyu13/react-fakers.svg?branch=main)](https://travis-ci.com/restuwahyu13/react-fakers)
+
 <img src="./cover.png" alt="logo" width="850" height="750" style="object-fit:cover"/>
 
 ## TABLE OF CONTENT

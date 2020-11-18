@@ -9,8 +9,6 @@ before_script:
 script:
   - node --version
   - npm --version
-  - npm run test:coveralls
-  - npm run test:codecov
 
 cache:
   npm: true
