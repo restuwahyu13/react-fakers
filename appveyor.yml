@@ -3,12 +3,6 @@ clone_depth: 50
 image:
   - Ubuntu
 
-environment:
-  matrix:
-    - nodejs_version: '13'
-    - nodejs_version: '12'
-    - nodejs_version: '11'
-
 install:
   - ps: Install-Product node $env:nodejs_version
 
