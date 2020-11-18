@@ -1,7 +1,6 @@
 clone_depth: 50
 
 image:
-  - Visual Studio 2019
   - Ubuntu
 
 environment:
@@ -20,14 +19,11 @@ before_test:
 test_script:
   - node --version
   - npm --version
-  - npm run test:codecov
-  - npm run test:coveralls
 
 cache:
   - node_modules
 
 os:
-  - Windows Server 2019
   - Ubuntu 16.04.6 LTS (Xenial Xerus)
 
 build: off
