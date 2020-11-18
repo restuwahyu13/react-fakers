@@ -1,6 +1,6 @@
 {
   "name": "react-fakers",
-  "version": "1.0.0",
+  "version": "1.0.1-rc1",
   "description": "react-fakers is a collection of dummy data for application development testing.",
   "main": "./build/index.js",
   "scripts": {

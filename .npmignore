@@ -22,4 +22,4 @@ development/
 logo.png
 cover.png
 build/*.br
-typings/
+typings/libs
