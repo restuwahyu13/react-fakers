@@ -1,0 +1,24 @@
+language: node_js
+
+node_js:
+  - node
+
+before_script:
+  - npm install
+
+script:
+  - node --version
+  - npm --version
+  - npm run test:coveralls
+  - npm run test:codecov
+
+cache:
+  npm: true
+  packages: true
+
+os:
+  - windows
+  - linux
+
+jobs:
+  fast_finish: true
