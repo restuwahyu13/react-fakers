@@ -8,8 +8,8 @@
     "test": "jest --runInBand --detectOpenHandles",
     "test:watch": "jest --watchAll --runInBand --detectOpenHandles",
     "test:coverage": "jest --coverage --colors",
-    "lint": "eslint ./src/libs --fix",
-    "formatter": "prettier --check ./src/libs"
+    "lint": "eslint ./src --fix",
+    "formatter": "prettier --check ./src"
   },
   "repository": {
     "type": "git",
