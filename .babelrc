@@ -9,7 +9,8 @@
       "plugins": [
         "@babel/plugin-transform-modules-commonjs",
         "@babel/plugin-proposal-class-properties",
-        "@babel/plugin-syntax-dynamic-import"
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-syntax-jsx"
       ],
       "ignore": [
         "/(node_modules|bower_components)/",

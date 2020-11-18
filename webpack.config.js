@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const { resolve } = require('path')
 const zlib = require('zlib')
 const TenserWebpackPlugin = require('terser-webpack-plugin')
@@ -7,6 +6,7 @@ const WebpackProgressBar = require('webpackbar')
 const ThreeShakingWebpackPlugin = require('webpack-common-shake').Plugin
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const CaseSensitivePathWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
   mode: 'production',
@@ -43,12 +43,13 @@ module.exports = {
               plugins: [
                 'babel-plugin-transform-remove-console',
                 'babel-plugin-transform-remove-undefined',
-                'babel-plugin-minify-dead-code-elimination',
                 'babel-plugin-transform-remove-strict-mode',
+                'babel-plugin-minify-dead-code-elimination',
                 '@babel/plugin-proposal-class-properties',
                 '@babel/plugin-transform-async-to-generator',
                 '@babel/plugin-transform-shorthand-properties',
                 '@babel/plugin-proposal-nullish-coalescing-operator',
+                '@babel/plugin-proposal-optional-chaining',
                 ['@babel/plugin-transform-runtime', { corejs: 3 }]
               ],
               cacheDirectory: false,
@@ -59,14 +60,17 @@ module.exports = {
           }
         ],
         include: resolve(process.cwd(), 'src'),
-        exclude: ['/(node_modules|bower_components)/', '/.(test.js|spec.js)/$', resolve(process.cwd(), 'build/**/*'), resolve(process.cwd(), 'coverage/**/*')]
+        exclude: [
+          '/(node_modules|bower_components)/',
+          '/.(test.js|spec.js)/$',
+          resolve(process.cwd(), 'build/**/*'),
+          resolve(process.cwd(), 'coverage/**/*')
+        ]
       }
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': 'production'
-    }),
+    new CaseSensitivePathWebpackPlugin(),
     new WebpackProgressBar(),
     new UnminifiedWebpackPlugin(),
     new ThreeShakingWebpackPlugin(),
@@ -115,7 +119,12 @@ module.exports = {
         extractComments: false,
         sourceMap: true,
         cache: false,
-        exclude: ['/(node_modules|bower_components)/', '/.(test.js|spec.js)/$', resolve(process.cwd(), 'build/**/*'), resolve(process.cwd(), 'coverage/**/*')]
+        exclude: [
+          '/(node_modules|bower_components)/',
+          '/.(test.js|spec.js)/$',
+          resolve(process.cwd(), 'build/**/*'),
+          resolve(process.cwd(), 'coverage/**/*')
+        ]
       })
     ],
     noEmitOnErrors: true,
@@ -135,7 +144,7 @@ module.exports = {
     symlinks: false,
     cacheWithContext: false
   },
-  devtool: 'source-map',
+  devtool: false,
   stats: {
     assetsSort: '!size',
     entrypoints: false,

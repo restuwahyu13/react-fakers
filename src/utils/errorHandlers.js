@@ -2,12 +2,6 @@ export const errorHandlers = (handler) => {
   switch (handler.type) {
     case 'propertyHandler':
       return propertyHandlers(handler)
-    // case 'apiKeyHandlers':
-    //   return apiKeyHandlers(handler)
-    // case 'apiKeyValidatorUIF':
-    //   return apiKeyValidatorUIF(handler)
-    // case 'apiKeyValidatorDummy':
-    //   return apiKeyValidatorDummy(handler)
     case 'httpErrorHandlers':
       return httpErrorHandlers(handler)
     default:
@@ -20,28 +14,6 @@ const propertyHandlers = ({ props }) => {
     return { status: 400, message: 'success property is required' }
   }
 }
-
-// const apiKeyHandlers = ({ props }) => {
-//   if (!props.apiKey) {
-//     return { status: 400, message: 'API KEY is required' }
-//   }
-// }
-
-// const apiKeyValidatorUIF = ({ props }) => {
-//   const pattern = /(\w{8})+(-)+(\w{8})+(-)+(\w{8})+(-)+(\w{8})$/gi
-//   const testPattern = pattern.test(props.apiKey)
-//   if (!testPattern) {
-//     return { status: 400, message: 'API KEY is not valid' }
-//   }
-// }
-
-// const apiKeyValidatorDummy = ({ props }) => {
-//   const pattern = /\w{24}/gi
-//   const testPattern = pattern.test(props.apiKey)
-//   if (!testPattern) {
-//     return { status: 400, message: 'API KEY is not valid' }
-//   }
-// }
 
 const httpErrorHandlers = ({ error }) => {
   switch (error.status) {

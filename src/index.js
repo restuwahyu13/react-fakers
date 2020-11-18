@@ -8,11 +8,11 @@ Connect With Me:
 - Linkedin: https://www.linkedin.com/in/restu-wahyu-saputra-2924a1119
 */
 
-export { default as Faker } from './libs/components/Faker'
-export { default as JsonPlaceHolder } from './libs/components/JsonPlaceHolder'
-export { default as Dummy } from './libs/components/Dummy'
-export { default as UIFaces } from './libs/components/UIFaces'
-export { default as useFaker } from './libs/hooks/Faker'
-export { default as useJsonPlaceHolder } from './libs/hooks/JsonPlaceHolder'
-export { default as useDummy } from './libs/hooks/Dummy'
-export { default as useUIFaces } from './libs/hooks/UIFaces'
+export { default as Faker } from './components/Faker'
+export { default as JsonPlaceHolder } from './components/JsonPlaceHolder'
+export { default as Dummy } from './components/Dummy'
+export { default as UIFaces } from './components/UIFaces'
+export { default as useFaker } from './hooks/Faker'
+export { default as useJsonPlaceHolder } from './hooks/JsonPlaceHolder'
+export { default as useDummy } from './hooks/Dummy'
+export { default as useUIFaces } from './hooks/UIFaces'
