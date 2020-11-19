@@ -79,7 +79,7 @@ npm i react-fakers | yarn add react-fakers
     const [state, setState] = useState(false)
     const { success, error } = useFaker({
       type: 'addresses',
-      params: { quantity: 5 }
+      params: { addresses: { quantity: 5 } }
     })
 
     useEffect(() => {
@@ -275,7 +275,11 @@ npm i react-fakers | yarn add react-fakers
     render() {
       return (
         <>
-          <Faker success={this.onSuccess} error={this.onError} type='addresses' params={{ quantity: 5 }} />
+          <Faker
+          success={this.onSuccess}
+          error={this.onError}
+          type='addresses'
+          params: { addresses: { quantity: 5 } }} />
 
           {!this.state.loading && <h4>Loading....</h4>}
           {this.state.loading &&
