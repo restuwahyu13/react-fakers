@@ -226,6 +226,7 @@ npm i react-fakers | yarn add react-fakers
       return (
         <>
           <Faker success={this.onSuccess} error={this.onError} />
+
           {!this.state.loading && <h4>Loading....</h4>}
           {this.state.loading &&
             this.state.data.map((val, id) => (
@@ -325,6 +326,7 @@ npm i react-fakers | yarn add react-fakers
       return (
         <>
           <JsonPlaceHolder success={this.onSuccess} error={this.onError} />
+
           {!this.state.loading && <h4>Loading....</h4>}
           {this.state.loading &&
             this.state.data.map((val, id) => (
