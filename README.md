@@ -347,7 +347,7 @@ npm i react-fakers | yarn add react-fakers
   export default App
   ```
 
-  - **JsonPlaceHolder**
+  - **JsonPlaceHolder With Params**
 
   ```js
   import React, { Component } from 'react'
