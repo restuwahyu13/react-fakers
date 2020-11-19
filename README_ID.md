@@ -479,7 +479,6 @@ npm i react-fakers | yarn add react-fakers
 
 - Untuk `Dummy Data` yang menggunakan `API KEY` jika anda mengalami limit, silahkan anda kunjungi ke layanan penyedia `API` terkait, untuk mendapatkan kunci `API KEY` anda sendiri
 - Untuk informasi lebih lanjut terkait `API` yang tersedia, anda bisa mengunjungi dokumentasi resminya dari masing - masing `Provider`
-- Untuk melakukan kontribusi project anda bisa melemparkan `issue` atau anda bisa mengcloning repository dan melakukan `Pull Request`
 - Untuk cara penggunaan lebih lanjut anda bisa membuka folder `app-dev/src/examples` di repository ini
 
 ### CONTRIBUTING
