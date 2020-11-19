@@ -100,13 +100,16 @@ const useDummy = (props) => {
               fetchData && setValues({ ...values, success: fetchData[0] })
             } else {
               const limitData = res && _.slice(res.data, 0, stateOptions.limit)
-              const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, stateOptions.limit, stateFilters)
+              const limitFiltersData =
+                filterCount > 0 && res && bodyFiltersWithLimit(res.data, stateOptions.limit, stateFilters)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && setValues({ ...values, success: fetchData[0] })
             }
           })
-          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
+          .catch(
+            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
+          )
         break
       default:
         fetch(`https://dummyapi.io/data/api/${stateType}`, {
@@ -151,7 +154,9 @@ const useDummy = (props) => {
               fetchData && setValues({ ...values, success: fetchData[0] })
             }
           })
-          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
+          .catch(
+            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
+          )
     }
   }
 

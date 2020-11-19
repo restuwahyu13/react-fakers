@@ -96,7 +96,8 @@ const Dummy = (props) => {
                 filterCount < 1 && res && fetchData.push(res.data)
                 fetchData && success(fetchData[0])
               } else {
-                const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, options.limit, filters)
+                const limitFiltersData =
+                  filterCount > 0 && res && bodyFiltersWithLimit(res.data, options.limit, filters)
                 const limitData = res && _.slice(res.data, 0, options.limit)
                 limitFiltersData && res && fetchData.push(limitFiltersData)
                 filterCount < 1 && res && fetchData.push(limitData)

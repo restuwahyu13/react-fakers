@@ -93,7 +93,8 @@ const useJsonPlaceHolder = (props) => {
               res && fetchData.push(res)
               fetchData && setValues({ ...values, success: fetchData[0] })
             } else {
-              const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
+              const limitFiltersData =
+                filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
               const limitData = res && _.slice(res, 0, stateOptions.limit)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
@@ -124,14 +125,17 @@ const useJsonPlaceHolder = (props) => {
               filterCount < 1 && res && fetchData.push(res)
               fetchData && setValues({ ...values, success: fetchData[0] })
             } else {
-              const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
+              const limitFiltersData =
+                filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
               const limitData = res && _.slice(res, 0, stateOptions.limit)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && setValues({ ...values, success: fetchData[0] })
             }
           })
-          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
+          .catch(
+            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
+          )
     }
   }
 

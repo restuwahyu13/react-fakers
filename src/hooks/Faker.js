@@ -85,7 +85,9 @@ const useFaker = (props) => {
             return Promise.reject(res)
           })
           .then((res) => res && setValues({ ...values, success: res.data }))
-          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
+          .catch(
+            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
+          )
         break
       default:
         fetch(`https://fakerapi.it/api/v1/${stateType}`, {
@@ -100,7 +102,9 @@ const useFaker = (props) => {
             return Promise.reject(res)
           })
           .then((res) => res && setValues({ ...values, success: res.data }))
-          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
+          .catch(
+            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
+          )
     }
   }
 
