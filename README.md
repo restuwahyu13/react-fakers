@@ -158,9 +158,7 @@ npm i react-fakers | yarn add react-fakers
     const [state, setState] = useState(false)
     const { success, error } = useJsonPlaceHolder({
       type: 'posts',
-      params: {
-        userId: 1
-      },
+      params: { posts: { userId: 1 } },
       options: { limit: 3 }
     })
 
@@ -276,10 +274,11 @@ npm i react-fakers | yarn add react-fakers
       return (
         <>
           <Faker
-          success={this.onSuccess}
-          error={this.onError}
-          type='addresses'
-          params: { addresses: { quantity: 5 } }/>
+            success={this.onSuccess}
+            error={this.onError}
+            type='addresses'
+            params={{ addresses: { quantity: 5 } }}
+          />
 
           {!this.state.loading && <h4>Loading....</h4>}
           {this.state.loading &&
@@ -302,7 +301,7 @@ npm i react-fakers | yarn add react-fakers
 
   ```js
   import React, { Component } from 'react'
-  import { Faker } from 'react-fakers'
+  import { JsonPlaceHolder } from 'react-fakers'
 
   class App extends Component {
     constructor(props) {
@@ -352,7 +351,7 @@ npm i react-fakers | yarn add react-fakers
 
   ```js
   import React, { Component } from 'react'
-  import { Faker } from 'react-fakers'
+  import { JsonPlaceHolder } from 'react-fakers'
 
   class App extends Component {
     constructor(props) {
@@ -383,7 +382,7 @@ npm i react-fakers | yarn add react-fakers
             success={this.onSuccess}
             error={this.onError}
             type='posts'
-            params={{ userId: 1 }}
+            params = {{ posts: { userId: 1 } }},
             options={{ limit: 3 }}
           />
 
