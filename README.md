@@ -21,7 +21,7 @@
   - [Author](#AUTHOR)
   - [License](#LICENSE)
 
-### INSTALLATION:
+### INSTALLATION
 
 ```sh
 npm i react-fakers | yarn add react-fakers
@@ -48,7 +48,7 @@ npm i react-fakers | yarn add react-fakers
     }, [])
 
     if (error) {
-      window.alert(error.message)
+      alert(error.message)
     }
 
     return (
@@ -59,6 +59,47 @@ npm i react-fakers | yarn add react-fakers
             <ul key={val.uuid}>
               <li>
                 {val.firstname} {val.lastname} - {val.email}
+              </li>
+            </ul>
+          ))}
+      </>
+    )
+  }
+
+  export default App
+  ```
+
+  - **useFaker With Params**
+
+  ```js
+  import React, { useState, useEffect } from 'react'
+  import { useFaker } from 'react-fakers'
+
+  const App = () => {
+    const [state, setState] = useState(false)
+    const { success, error } = useFaker({
+      type: 'addresses',
+      params: { quantity: 5 }
+    })
+
+    useEffect(() => {
+      if (success) {
+        setState(true)
+      }
+    }, [])
+
+    if (error) {
+      alert(error.message)
+    }
+
+    return (
+      <>
+        {!state && <h4>Loading....</h4>}
+        {state &&
+          success.map((val, id) => (
+            <ul key={val.uuid}>
+              <li>
+                {val.street} - {val.streetName} - {val.zipcode}
               </li>
             </ul>
           ))}
@@ -86,7 +127,7 @@ npm i react-fakers | yarn add react-fakers
     }, [])
 
     if (error) {
-      window.alert(error.message)
+      alert(error.message)
     }
 
     return (
@@ -97,6 +138,50 @@ npm i react-fakers | yarn add react-fakers
             <ul key={id}>
               <li>
                 {val.name} - {val.email}
+              </li>
+            </ul>
+          ))}
+      </>
+    )
+  }
+
+  export default App
+  ```
+
+  - **useJsonPlaceHolder With Params**
+
+  ```js
+  import React, { useState, useEffect } from 'react'
+  import { useJsonPlaceHolder } from 'react-fakers'
+
+  const App = () => {
+    const [state, setState] = useState(false)
+    const { success, error } = useJsonPlaceHolder({
+      type: 'posts',
+      params: {
+        userId: 1
+      },
+      options: { limit: 3 }
+    })
+
+    useEffect(() => {
+      if (success) {
+        setState(true)
+      }
+    }, [])
+
+    if (error) {
+      alert(error.message)
+    }
+
+    return (
+      <>
+        {!state && <h4>Loading....</h4>}
+        {state &&
+          success.map((val, id) => (
+            <ul key={id}>
+              <li>
+                {val.id} - {val.title}
               </li>
             </ul>
           ))}
@@ -133,7 +218,7 @@ npm i react-fakers | yarn add react-fakers
 
     onError = (error) => {
       if (error) {
-        window.alert(error.message)
+        alert(error.message)
       }
     }
 
@@ -147,6 +232,56 @@ npm i react-fakers | yarn add react-fakers
               <ul key={val.uuid}>
                 <li>
                   {val.firstname} {val.lastname} - {val.email}
+                </li>
+              </ul>
+            ))}
+        </>
+      )
+    }
+  }
+
+  export default App
+  ```
+
+  - **Faker With Params**
+
+  ```js
+  import React, { Component } from 'react'
+  import { Faker } from 'react-fakers'
+
+  class App extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        loading: false,
+        data: []
+      }
+    }
+
+    onSuccess = (res) => {
+      this.setState({
+        loading: true,
+        data: res
+      })
+    }
+
+    onError = (error) => {
+      if (error) {
+        alert(error.message)
+      }
+    }
+
+    render() {
+      return (
+        <>
+          <Faker success={this.onSuccess} error={this.onError} type='addresses' params={{ quantity: 5 }} />
+
+          {!this.state.loading && <h4>Loading....</h4>}
+          {this.state.loading &&
+            this.state.data.map((val, id) => (
+              <ul key={val.uuid}>
+                <li>
+                  {val.street} - {val.streetName} - {val.zipcode}
                 </li>
               </ul>
             ))}
@@ -182,7 +317,7 @@ npm i react-fakers | yarn add react-fakers
 
     onError = (error) => {
       if (error) {
-        window.alert(error.message)
+        alert(error.message)
       }
     }
 
@@ -196,6 +331,62 @@ npm i react-fakers | yarn add react-fakers
               <ul key={id}>
                 <li>
                   {val.name} - {val.email}
+                </li>
+              </ul>
+            ))}
+        </>
+      )
+    }
+  }
+
+  export default App
+  ```
+
+  - **JsonPlaceHolder**
+
+  ```js
+  import React, { Component } from 'react'
+  import { Faker } from 'react-fakers'
+
+  class App extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        loading: false,
+        data: []
+      }
+    }
+
+    onSuccess = (res) => {
+      this.setState({
+        loading: true,
+        data: res
+      })
+    }
+
+    onError = (error) => {
+      if (error) {
+        alert(error.message)
+      }
+    }
+
+    render() {
+      return (
+        <>
+          <JsonPlaceHolder
+            success={this.onSuccess}
+            error={this.onError}
+            type='posts'
+            params={{ userId: 1 }}
+            options={{ limit: 3 }}
+          />
+
+          {!this.state.loading && <h4>Loading....</h4>}
+          {this.state.loading &&
+            this.state.data.map((val, id) => (
+              <ul key={id}>
+                <li>
+                  {val.id} - {val.title}
                 </li>
               </ul>
             ))}
