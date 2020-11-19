@@ -1,6 +1,6 @@
 {
   "name": "react-fakers",
-  "version": "1.0.1-rc1",
+  "version": "1.0.2",
   "description": "react-fakers is a collection of dummy data for application development testing.",
   "main": "./build/index.js",
   "scripts": {
@@ -23,14 +23,17 @@
     "dummy data",
     "fakerjs",
     "jsonplaceholder",
-    "fakerest",
-    "fakerest api"
+    "fake rest",
+    "fakerest api",
+    "react-faker",
+    "react faker",
+    "react fakers"
   ],
   "author": "Restu Wahyu Saputra",
   "bugs": {
     "url": "https://github.com/restuwahyu13/react-fakers/issues"
   },
-  "homepage": "https://github.com/restuwahyu13/react-fakers",
+  "homepage": "https://github.com/restuwahyu13/react-fakers/blob/main/README.md",
   "license": "MIT",
   "dependencies": {
     "@types/react": ">=16.8.5",
