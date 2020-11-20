@@ -36,83 +36,73 @@ describe('Components Group Test', () => {
 })
 
 describe('Hooks Group Test', () => {
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
-
-  afterEach(() => {
-    jest.useRealTimers()
-  })
-
   /**
    * @description Faker Test Teritory
    */
 
-  it('useFaker hash been called', async () => {
+  it('useFaker hash been called', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useFaker())
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(10)
+    done()
   })
 
-  it('useFaker using params', async () => {
+  it('useFaker using params', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useFaker({ params: { users: { quantity: 3 } } }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(3)
+    done()
   })
 
   /**
    * @description Json Place Holder Test Teritory
    */
 
-  it('useJsonPlaceHolder hash been called', async () => {
+  it('useJsonPlaceHolder hash been called', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder())
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(10)
+    done()
   })
 
-  it('useJsonPlaceHolder using limit', async () => {
+  it('useJsonPlaceHolder using limit', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder({ options: { limit: 5 } }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(5)
+    done()
   })
 
-  it('useJsonPlaceHolder using filters', async () => {
+  it('useJsonPlaceHolder using filters', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder({ filters: { id: 1 } }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(1)
+    done()
   })
 
-  it('useJsonPlaceHolder using params', async () => {
-    const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder({ type: 'posts', params: { userId: 1, id: 1 } }))
+  it('useJsonPlaceHolder using params', async (done) => {
+    const { result, waitForNextUpdate } = renderHook(() =>
+      useJsonPlaceHolder({ type: 'posts', params: { userId: 1, id: 1 } })
+    )
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
-    expect(result.current.success[0].title).toEqual('sunt aut facere repellat provident occaecati excepturi optio reprehenderit')
+    expect(result.current.success[0].title).toEqual(
+      'sunt aut facere repellat provident occaecati excepturi optio reprehenderit'
+    )
+    done()
   })
 
-  it('useJsonPlaceHolder using params and limit', async () => {
+  it('useJsonPlaceHolder using params and limit', async (done) => {
     const props = {
       type: 'posts',
       params: { userId: 1 },
@@ -121,38 +111,35 @@ describe('Hooks Group Test', () => {
 
     const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder({ ...props }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(5)
+    done()
   })
 
   /**
    * @description Dummy Test Teritory
    */
 
-  it('useDummy hash been called', async () => {
+  it('useDummy hash been called', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useDummy())
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(20)
+    done()
   })
 
-  it('useDummy using limit', async () => {
+  it('useDummy using limit', async (done) => {
     const { result, waitForNextUpdate } = renderHook(() => useDummy({ options: { limit: 5 } }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(5)
+    done()
   })
 
-  it('useDummy using params and limit', async () => {
+  it('useDummy using params and limit', async (done) => {
     const props = {
       params: { user: { id: '0F8JIqi4zwvb77FGz6Wt', refs: 'post' } },
       options: { limit: 5 }
@@ -160,10 +147,9 @@ describe('Hooks Group Test', () => {
 
     const { result, waitForNextUpdate } = renderHook(() => useDummy({ ...props }))
     await act(async () => {
-      jest.runAllTimers()
-      jest.setTimeout(8000)
       await waitForNextUpdate()
     })
     expect(result.current.success.length).toEqual(5)
+    done()
   })
 })

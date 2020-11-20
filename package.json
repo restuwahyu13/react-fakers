@@ -5,8 +5,8 @@
   "main": "./build/index.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --env.env=prod -p",
-    "test": "jest --runInBand --detectOpenHandles",
-    "test:watch": "jest --watchAll --runInBand --detectOpenHandles",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
     "test:coverage": "jest --coverage --colors",
     "lint": "eslint ./src --fix",
     "formatter": "prettier --check ./src"
