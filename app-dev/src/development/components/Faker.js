@@ -12,8 +12,6 @@ import { errorHandlers } from '../utils/errorHandlers'
 const Faker = (props) => {
   const { success, error, type, params } = props
 
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
-
   useEffect(() => {
     onCheck()
   }, [])
@@ -77,7 +75,7 @@ const Faker = (props) => {
     }
   }
 
-  return <div />
+  return <>{!success && new Error(errorHandlers({ type: 'propertyHandler', props }).message)}</>
 }
 
 Faker.propTypes = {

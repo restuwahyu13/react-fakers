@@ -11,7 +11,7 @@ import { errorHandlers } from '../utils/errorHandlers'
 const UIFaces = (props) => {
   const { success, error, apiKey, params } = props
 
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
+  !success && !error && errorHandlers({ type: 'propertyHandler', props })
 
   useEffect(() => {
     onFetch()

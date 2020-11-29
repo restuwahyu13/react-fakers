@@ -11,7 +11,7 @@ export const errorHandlers = (handler) => {
 
 const propertyHandlers = ({ props }) => {
   if (!props.success) {
-    return { status: 400, message: 'success property is required' }
+    return { message: 'success property is required' }
   }
 }
 

@@ -13,7 +13,7 @@ import { errorHandlers } from '../utils/errorHandlers'
 const Dummy = (props) => {
   const { success, error, type, apiKey, params, options, filters } = props
 
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
+  !success && !error && errorHandlers({ type: 'propertyHandler', props })
 
   useEffect(() => {
     onCheck()
