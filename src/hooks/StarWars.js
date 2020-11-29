@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import fetch from 'isomorphic-fetch'
 import { paramsBindRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, swrFilter } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -78,8 +79,7 @@ const useStarWars = (props) => {
           onFetchRefs(paramsBindFetch)
         } else {
           stateParams[stateType] &&
-            window
-              .fetch(`https://swapi.dev/api/${stateType}/${paramsBindFetch.id}`)
+            fetch(`https://swapi.dev/api/${stateType}/${paramsBindFetch.id}`)
               .then((res) => {
                 if (res.ok) return res.json()
                 return Promise.reject(res)
@@ -98,8 +98,7 @@ const useStarWars = (props) => {
         }
         break
       default:
-        window
-          .fetch(`https://swapi.dev/api/${stateType}`)
+        fetch(`https://swapi.dev/api/${stateType}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -126,8 +125,7 @@ const useStarWars = (props) => {
   }
 
   const onFetchRefs = (paramsRefs) => {
-    window
-      .fetch(`https://swapi.dev/api/${paramsRefs.refs}/${paramsRefs.id}`)
+    fetch(`https://swapi.dev/api/${paramsRefs.refs}/${paramsRefs.id}`)
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)

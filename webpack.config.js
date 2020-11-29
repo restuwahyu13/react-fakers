@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-const zlib = require('zlib')
 const TenserWebpackPlugin = require('terser-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackProgressBar = require('webpackbar')
@@ -10,7 +9,7 @@ const CaseSensitivePathWebpackPlugin = require('case-sensitive-paths-webpack-plu
 module.exports = {
   mode: 'production',
   entry: {
-    main: ['whatwg-fetch', resolve(process.cwd(), 'src/index.js')]
+    main: resolve(process.cwd(), 'src/index.js')
   },
   output: {
     filename: 'index.js',

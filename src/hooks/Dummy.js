@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import fetch from 'isomorphic-fetch'
 import { paramsBindDeepRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -76,15 +77,14 @@ const useDummy = (props) => {
 
     switch (typeof params) {
       case 'object':
-        window
-          .fetch(paramsBindFetch.url, {
-            method: 'GET',
-            headers: {
-              'app-id': `${stateApiKey}`,
-              accept: 'application/json',
-              'content-type': 'application/json'
-            }
-          })
+        fetch(paramsBindFetch.url, {
+          method: 'GET',
+          headers: {
+            'app-id': `${stateApiKey}`,
+            accept: 'application/json',
+            'content-type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -110,14 +110,13 @@ const useDummy = (props) => {
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
         break
       default:
-        window
-          .fetch(`https://dummyapi.io/data/api/${stateType}`, {
-            headers: {
-              'app-id': `${stateApiKey}`,
-              accept: 'application/json',
-              'content-type': 'application/json'
-            }
-          })
+        fetch(`https://dummyapi.io/data/api/${stateType}`, {
+          headers: {
+            'app-id': `${stateApiKey}`,
+            accept: 'application/json',
+            'content-type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)

@@ -51,15 +51,14 @@ const useUIFaces = (props) => {
   const onFetch = () => {
     const paramsBindUIFaces = paramsBind({ ...stateParams })
 
-    window
-      .fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
-        method: 'GET',
-        headers: {
-          'X-API-KEY': `${stateApiKey}`,
-          Accept: 'application/json',
-          'Cache-Control': 'no-cache'
-        }
-      })
+    fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': `${stateApiKey}`,
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache'
+      }
+    })
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import propTypes from 'prop-types'
+import fetch from 'isomorphic-fetch'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { replaceString } from '../utils/replaceString'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -43,14 +44,13 @@ const Faker = (props) => {
 
     switch (typeof params) {
       case 'object':
-        window
-          .fetch(`https://fakerapi.it/api/v1/${type}/?${replaceString(paramsBindFetch.value)}`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            }
-          })
+        fetch(`https://fakerapi.it/api/v1/${type}/?${replaceString(paramsBindFetch.value)}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -59,14 +59,13 @@ const Faker = (props) => {
           .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
         break
       default:
-        window
-          .fetch(`https://fakerapi.it/api/v1/${type}`, {
-            method: 'GET',
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json'
-            }
-          })
+        fetch(`https://fakerapi.it/api/v1/${type}`, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)

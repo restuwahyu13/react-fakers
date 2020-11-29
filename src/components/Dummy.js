@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import fetch from 'isomorphic-fetch'
 import propTypes from 'prop-types'
 import { paramsBindDeepRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilters'
@@ -37,15 +38,14 @@ const Dummy = (props) => {
 
     switch (typeof params) {
       case 'object':
-        window
-          .fetch(paramsBindFetch.url, {
-            method: 'GET',
-            headers: {
-              'app-id': `${apiKey}`,
-              accept: 'application/json',
-              'content-type': 'application/json'
-            }
-          })
+        fetch(paramsBindFetch.url, {
+          method: 'GET',
+          headers: {
+            'app-id': `${apiKey}`,
+            accept: 'application/json',
+            'content-type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -71,14 +71,13 @@ const Dummy = (props) => {
           .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
         break
       default:
-        window
-          .fetch(`https://dummyapi.io/data/api/${type}`, {
-            headers: {
-              'app-id': `${apiKey}`,
-              accept: 'application/json',
-              'content-type': 'application/json'
-            }
-          })
+        fetch(`https://dummyapi.io/data/api/${type}`, {
+          headers: {
+            'app-id': `${apiKey}`,
+            accept: 'application/json',
+            'content-type': 'application/json'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)

@@ -1,10 +1,5 @@
 import { errorHandlers } from '../src/utils/errorHandlers'
 
-it('property test not exists', () => {
-  const { status } = errorHandlers({ type: 'propertyHandler', props: {} })
-  expect(status).toStrictEqual(400)
-})
-
 describe('group all test errorHandlers utils', () => {
   it('errorHandlers test matching HTTP STATUS CODE 429', () => {
     const { status, message } = errorHandlers({

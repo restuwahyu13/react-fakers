@@ -13,6 +13,10 @@ describe('Components Group Test', () => {
     jestMock = jest.fn()
   })
 
+  afterAll(() => {
+    jest.clearAllMocks()
+  })
+
   test('Faker property hash been called', () => {
     const wrapper = shallow(<Faker success={jestMock} />)
     expect(wrapper.length).toEqual(1)

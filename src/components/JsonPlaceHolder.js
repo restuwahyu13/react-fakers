@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import fetch from 'isomorphic-fetch'
 import PropTypes from 'prop-types'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
@@ -39,8 +40,7 @@ const JsonPlaceHolder = (props) => {
 
     switch (typeof params) {
       case 'object':
-        window
-          .fetch(`https://jsonplaceholder.typicode.com/${type}?${paramsBindFetch.value}`)
+        fetch(`https://jsonplaceholder.typicode.com/${type}?${paramsBindFetch.value}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -62,8 +62,7 @@ const JsonPlaceHolder = (props) => {
           .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
         break
       default:
-        window
-          .fetch(`https://jsonplaceholder.typicode.com/${type}`)
+        fetch(`https://jsonplaceholder.typicode.com/${type}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)

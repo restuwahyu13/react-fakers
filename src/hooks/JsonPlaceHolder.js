@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import fetch from 'isomorphic-fetch'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -75,14 +76,13 @@ const useJsonPlaceHolder = (props) => {
 
     switch (typeof params) {
       case 'object':
-        window
-          .fetch(`https://jsonplaceholder.typicode.com/${stateType}?${paramsBindFetch.value}`, {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'Cache-Control': 'no-cache'
-            }
-          })
+        fetch(`https://jsonplaceholder.typicode.com/${stateType}?${paramsBindFetch.value}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -105,14 +105,13 @@ const useJsonPlaceHolder = (props) => {
           .catch((err) => setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
         break
       default:
-        window
-          .fetch(`https://jsonplaceholder.typicode.com/${stateType}`, {
-            headers: {
-              Accept: 'application/json',
-              'Content-Type': 'application/json',
-              'Cache-Control': 'no-cache'
-            }
-          })
+        fetch(`https://jsonplaceholder.typicode.com/${stateType}`, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-cache'
+          }
+        })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)

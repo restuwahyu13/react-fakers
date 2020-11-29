@@ -1,6 +1,6 @@
 {
   "name": "react-fakers",
-  "version": "1.0.2",
+  "version": "1.0.3-rc1",
   "description": "react-fakers is a collection of dummy data for application development testing.",
   "main": "./build/index.js",
   "scripts": {
@@ -35,6 +35,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/react": "^16.14.1",
+    "isomorphic-fetch": "^3.0.0",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {

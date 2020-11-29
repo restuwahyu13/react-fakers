@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import fetch from 'isomorphic-fetch'
 import PropTypes from 'prop-types'
 import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -21,15 +22,14 @@ const UIFaces = (props) => {
   const onFetch = () => {
     const paramsBindUIFaces = params && paramsBind({ ...params })
 
-    window
-      .fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
-        method: 'GET',
-        headers: {
-          'X-API-KEY': `${apiKey}`,
-          Accept: 'application/json',
-          'Cache-Control': 'no-cache'
-        }
-      })
+    fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
+      method: 'GET',
+      headers: {
+        'X-API-KEY': `${apiKey}`,
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache'
+      }
+    })
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)
