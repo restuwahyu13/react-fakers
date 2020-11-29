@@ -24,7 +24,6 @@
 
 import React, { Component } from 'react'
 import { Faker } from 'react-fakers'
-// import Faker from './development/components/Faker'
 
 class App extends Component {
   constructor(props) {

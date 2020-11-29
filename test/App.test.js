@@ -5,6 +5,7 @@ import UIFaces from '../src/components/UIFaces'
 import useFaker from '../src/hooks/Faker'
 import useJsonPlaceHolder from '../src/hooks/JsonPlaceHolder'
 import useDummy from '../src/hooks/Dummy'
+import useStarWars from '../src/hooks/StarWars'
 
 describe('Components Group Test', () => {
   let jestMock
@@ -139,6 +140,28 @@ describe('Hooks Group Test', () => {
     }
 
     const { result, waitForNextUpdate } = renderHook(() => useDummy({ ...props }))
+    await act(async () => {
+      await waitForNextUpdate()
+    })
+    expect(result.current.success.length).toEqual(5)
+    done()
+  })
+
+  /**
+   * @description StartWars Test Teritory
+   */
+
+  it('useStarWars hash been called', async (done) => {
+    const { result, waitForNextUpdate } = renderHook(() => useStarWars())
+    await act(async () => {
+      await waitForNextUpdate()
+    })
+    expect(result.current.success.length).toEqual(10)
+    done()
+  })
+
+  it('useStarWars using limit', async (done) => {
+    const { result, waitForNextUpdate } = renderHook(() => useStarWars({ options: { limit: 5 } }))
     await act(async () => {
       await waitForNextUpdate()
     })
