@@ -38,14 +38,7 @@ npm i react-fakers | yarn add react-fakers
   import { useFaker } from 'react-fakers'
 
   const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useFaker()
-
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
+    const { success, error, loading } = useFaker()
 
     if (error) {
       alert(error.message)
@@ -53,15 +46,15 @@ npm i react-fakers | yarn add react-fakers
 
     return (
       <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={val.uuid}>
-              <li>
+        {!loading && <h4>Loading....</h4>}
+        <ul>
+          {loading &&
+            success.map((val, id) => (
+              <li key={val.uuid}>
                 {val.firstname} {val.lastname} - {val.email}
               </li>
-            </ul>
-          ))}
+            ))}
+        </ul>
       </>
     )
   }
@@ -76,33 +69,27 @@ npm i react-fakers | yarn add react-fakers
   import { useFaker } from 'react-fakers'
 
   const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useFaker({
+  
+    const { success, error, loading } = useFaker({
       type: 'addresses',
       params: { addresses: { quantity: 5 } }
     })
-
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
 
     if (error) {
       alert(error.message)
     }
 
     return (
-      <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={val.uuid}>
-              <li>
-                {val.street} - {val.streetName} - {val.zipcode}
+        <>
+        {!loading && <h4>Loading....</h4>}
+         <ul>
+          {loading &&
+            success.map((val, id) => (
+              <li key={val.uuid}>
+                {val.firstname} {val.lastname} - {val.email}
               </li>
-            </ul>
-          ))}
+            ))}
+        </ul>
       </>
     )
   }
@@ -117,14 +104,8 @@ npm i react-fakers | yarn add react-fakers
   import { useJsonPlaceHolder } from 'react-fakers'
 
   const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useJsonPlaceHolder()
-
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
+  
+    const { success, error, loading } = useJsonPlaceHolder()
 
     if (error) {
       alert(error.message)
@@ -132,15 +113,15 @@ npm i react-fakers | yarn add react-fakers
 
     return (
       <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={id}>
-              <li>
+        {!loading && <h4>Loading....</h4>}
+         <ul>
+          {loading &&
+            success.map((val, id) => (
+              <li key={id}>
                 {val.name} - {val.email}
               </li>
-            </ul>
-          ))}
+            ))}
+        </ul>
       </>
     )
   }
@@ -155,18 +136,12 @@ npm i react-fakers | yarn add react-fakers
   import { useJsonPlaceHolder } from 'react-fakers'
 
   const App = () => {
-    const [state, setState] = useState(false)
-    const { success, error } = useJsonPlaceHolder({
+
+    const { success, error, loading } = useJsonPlaceHolder({
       type: 'posts',
       params: { posts: { userId: 1 } },
       options: { limit: 3 }
     })
-
-    useEffect(() => {
-      if (success) {
-        setState(true)
-      }
-    }, [])
 
     if (error) {
       alert(error.message)
@@ -174,15 +149,15 @@ npm i react-fakers | yarn add react-fakers
 
     return (
       <>
-        {!state && <h4>Loading....</h4>}
-        {state &&
-          success.map((val, id) => (
-            <ul key={id}>
-              <li>
+        {!loading && <h4>Loading....</h4>}
+         <ul>
+          {loading &&
+            success.map((val, id) => (
+              <li key={id}>
                 {val.id} - {val.title}
               </li>
-            </ul>
-          ))}
+            ))}
+        </ul>
       </>
     )
   }
@@ -225,15 +200,15 @@ npm i react-fakers | yarn add react-fakers
         <>
           <Faker success={this.onSuccess} error={this.onError} />
 
-          {!this.state.loading && <h4>Loading....</h4>}
-          {this.state.loading &&
-            this.state.data.map((val, id) => (
-              <ul key={val.uuid}>
-                <li>
-                  {val.firstname} {val.lastname} - {val.email}
-                </li>
-              </ul>
-            ))}
+           {!this.state.loading && <h4>Loading....</h4>}
+            <ul>
+              {this.state.loading &&
+                this.state.data.map((val, id) => (
+                  <li key={val.uuid}>
+                    {val.firstname} {val.lastname} - {val.email}
+                  </li>
+                ))}
+           </ul>
         </>
       )
     }
@@ -281,14 +256,14 @@ npm i react-fakers | yarn add react-fakers
           />
 
           {!this.state.loading && <h4>Loading....</h4>}
-          {this.state.loading &&
-            this.state.data.map((val, id) => (
-              <ul key={val.uuid}>
-                <li>
+          <ul>
+            {this.state.loading &&
+              this.state.data.map((val, id) => (
+                <li key={val.uuid}>
                   {val.street} - {val.streetName} - {val.zipcode}
                 </li>
-              </ul>
-            ))}
+              ))}
+          </ul>
         </>
       )
     }
@@ -331,14 +306,14 @@ npm i react-fakers | yarn add react-fakers
           <JsonPlaceHolder success={this.onSuccess} error={this.onError} />
 
           {!this.state.loading && <h4>Loading....</h4>}
-          {this.state.loading &&
-            this.state.data.map((val, id) => (
-              <ul key={id}>
-                <li>
+          <ul>
+            {this.state.loading &&
+              this.state.data.map((val, id) => (
+                <li key={id}>
                   {val.name} - {val.email}
                 </li>
-              </ul>
-            ))}
+              ))}
+          </ul> 
         </>
       )
     }
@@ -387,14 +362,14 @@ npm i react-fakers | yarn add react-fakers
           />
 
           {!this.state.loading && <h4>Loading....</h4>}
-          {this.state.loading &&
-            this.state.data.map((val, id) => (
-              <ul key={id}>
-                <li>
+          <ul>
+            {this.state.loading &&
+              this.state.data.map((val, id) => (
+                <li key={val.uuid}>
                   {val.id} - {val.title}
                 </li>
-              </ul>
-            ))}
+              ))}
+          </ul>
         </>
       )
     }
@@ -422,6 +397,11 @@ npm i react-fakers | yarn add react-fakers
 |                        | filters  | _object_  | _optional_        | { }                                 |                                                      |
 | **useUIFaces**         | apiKey   | _string_  | _optional_        | 43651248-182440F6-8653E4E2-5438FCB2 | To display dummy data from the UI Faces API          |
 |                        | params   | _object_  | _optional_        | { limit: 10 }                       |                                                      |
+| **useStarWars**        | type     | _string_  | _optional_        | people                              | To display dummy data from the Star Wars API        | 
+|                        | params   | _object_  | _optional_        | { }                                 |                                                      |
+|                        | options  | _object_  | _optional_        | { limit: 0 }                        |                                                      |
+|                        | filters  | _object_  | _optional_        | { }                                 |                                                      |
+
 
 - **COMPONENTS**
 
@@ -451,29 +431,30 @@ npm i react-fakers | yarn add react-fakers
 
 | API Name          | API Key | Call Per/Day | Call Per/Month |
 | ----------------- | ------- | ------------ | -------------- |
-| Faker             | No      | Unlimited    | unlimited      |
-| Json Place Holder | No      | Unlimited    | unlimited      |
-| Dummy API         | Yes     | 500          | undefined      |
-| UI Faces          | Yes     | 500          | undefined      |
+| Faker             | No      | Unlimited    | Unlimited      |
+| Json Place Holder | No      | Unlimited    | Unlimited      |
+| Dummy API         | Yes     | 500          | Undefined      |
+| UI Faces          | Yes     | 500          | Undefined      |
+| Star Wars         | No      | Unlimited    | Unlimited      | 
 
 ### API LIST
 
-| API Name          | Status     | Documentation                              |
-| ----------------- | ---------- | ------------------------------------------ |
-| Faker             | Ready      | [Click Here](https://tinyurl.com/yy8m2xvo) |
-| Json Place Holder | Ready      | [Click Here](https://tinyurl.com/y5s3yfkg) |
-| Dummy API         | Ready      | [Click Here](https://tinyurl.com/y5a6dew8) |
-| UI Faces          | Ready      | [Click Here](https://tinyurl.com/y4cv59qy) |
-| Pokemon           | Comingsoon | [Click Here]()                             |
-| Star Wars         | Comingsoon | [Click Here]()                             |
-| Marvel            | Comingsoon | [Click Here]()                             |
-| Harry Potter      | Comingsoon | [Click Here]()                             |
-| IMDB              | Comingsoon | [Click Here]()                             |
-| The Cat           | Comingsoon | [Click Here]()                             |
-| Anime             | Comingsoon | [Click Here]()                             |
-| Ricky And Morty   | Comingsoon | [Click Here]()                             |
-| Unsplash          | Comingsoon | [Click Here]()                             |
-| Listen Notes      | Comingsoon | [Click Here]()                             |
+| API Name          | Status      | Documentation                              |
+| ----------------- | ----------- | ------------------------------------------ |
+| Faker             | Ready       | [Click Here](https://tinyurl.com/yy8m2xvo) |
+| Json Place Holder | Ready       | [Click Here](https://tinyurl.com/y5s3yfkg) |
+| Dummy API         | Ready       | [Click Here](https://tinyurl.com/y5a6dew8) |
+| UI Faces          | Ready       | [Click Here](https://tinyurl.com/y4cv59qy) |
+| Pokemon           | Coming Soon | [Click Here]()                             |
+| Star Wars         | Ready       | [Click Here](https://swapi.dev/)           |
+| Marvel            | Coming Soon | [Click Here]()                             |
+| Harry Potter      | Coming Soon | [Click Here]()                             |
+| IMDB              | Coming Soon | [Click Here]()                             |
+| The Cat           | Coming Soon | [Click Here]()                             |
+| Anime             | Coming Soon | [Click Here]()                             |
+| Ricky And Morty   | Coming Soon | [Click Here]()                             |
+| Unsplash          | Coming Soon | [Click Here]()                             |
+| Listen Notes      | Coming Soon | [Click Here]()                             |
 
 ### TRANSLATION
 
@@ -482,13 +463,13 @@ npm i react-fakers | yarn add react-fakers
 
 ### NOTES
 
-- For `Dummy Data` that uses `API KEY` if you have a limit, please visit the `API` provider service, to get your own `API KEY`
+- For `Provider` that uses `API KEY` if you have a limit, please visit the `API` provider service, to get your own `API KEY`
 - For more information on the `API` available, you can visit the official documentation of each `Provider`
 - To find out more about using this tool, you can open the `app-dev/src/examples` in this repository
 
 ### CONTRIBUTING
 
-Want to make **React Fakers** more perfect? Let's contribute and follow the [contribution guide.](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md)
+Want to make **React Fakers** more perfect ? Let's contribute and follow the [contribution guide.](https://github.com/restuwahyu13/react-fakers/blob/main/CONTRIBUTING.md)
 
 ### BUGS
 
