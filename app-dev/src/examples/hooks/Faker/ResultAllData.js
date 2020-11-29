@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useFaker } from 'react-fakers'
 
 const ResultAllData = () => {
-  const [state, setState] = useState(false)
-  const { success, error } = useFaker()
-
-  useEffect(() => {
-    if (success) {
-      setState(true)
-    }
-  }, [])
+  const { success, error, loading } = useFaker()
 
   if (error) {
     window.alert(error.message)
@@ -17,15 +10,15 @@ const ResultAllData = () => {
 
   return (
     <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={id}>
-            <li>
+      {!loading && <h4>Loading....</h4>}
+      <ul>
+        {loading &&
+          success.map((val, id) => (
+            <li key={id}>
               {val.firstname} {val.lastname} - {val.email}
             </li>
-          </ul>
-        ))}
+          ))}
+      </ul>
     </>
   )
 }

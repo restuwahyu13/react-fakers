@@ -1,15 +1,13 @@
 import React from 'react'
-import { useJsonPlaceHolder } from 'react-fakers'
+import { useStarWars } from 'react-fakers'
 
-const ResultWithFilters = () => {
+const ResultWithOptions = () => {
   /**
-   * @note You can filter data according to the response given, but you cannot filter data that has sub-documents
+   * @note You can limit the data displayed using options.limit
    */
 
-  const { success, error, loading } = useJsonPlaceHolder({
-    filters: {
-      name: 'Leanne Graham'
-    }
+  const { success, error, loading } = useStarWars({
+    options: { limit: 5 }
   })
 
   if (error) {
@@ -31,4 +29,4 @@ const ResultWithFilters = () => {
   )
 }
 
-export default ResultWithFilters
+export default ResultWithOptions

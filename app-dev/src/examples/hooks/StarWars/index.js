@@ -4,7 +4,7 @@ import ResultWithFilters from './ResultWithFilters'
 import ResultWithOptions from './ResultWithOptions'
 import ResultWithParams from './ResultWithParams'
 
-function JsonPlaceHolderHooks() {
+function StarWarsHooks() {
   return (
     <>
       {/* <ResultAllData /> */}
@@ -15,4 +15,4 @@ function JsonPlaceHolderHooks() {
   )
 }
 
-export default JsonPlaceHolderHooks
+export default StarWarsHooks

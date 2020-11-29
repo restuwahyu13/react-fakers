@@ -1,14 +1,14 @@
 import React from 'react'
-import { useJsonPlaceHolder } from 'react-fakers'
+import { useStarWars } from 'react-fakers'
 
 const ResultWithFilters = () => {
   /**
    * @note You can filter data according to the response given, but you cannot filter data that has sub-documents
    */
 
-  const { success, error, loading } = useJsonPlaceHolder({
+  const { success, error, loading } = useStarWars({
     filters: {
-      name: 'Leanne Graham'
+      name: 'Luke Skywalker'
     }
   })
 

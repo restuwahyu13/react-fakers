@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useUIFaces } from 'react-fakers'
 
 const ResultAllData = () => {
-  const [state, setState] = useState(false)
-  const { success, error } = useUIFaces()
-
-  useEffect(() => {
-    if (success) {
-      setState(true)
-    }
-  }, [])
-
+  const { success, error, loading } = useUIFaces()
   if (error) {
     window.alert(error.message)
   }
 
   return (
     <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={id}>
-            <li>
+      {!loading && <h4>Loading....</h4>}
+      <ul>
+        {loading &&
+          success.map((val, id) => (
+            <li key={id}>
               {val.name} - {val.email} - {val.position}
             </li>
-          </ul>
-        ))}
+          ))}
+      </ul>
     </>
   )
 }

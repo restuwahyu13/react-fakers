@@ -1,8 +1,8 @@
 import React from 'react'
-import { useJsonPlaceHolder } from 'react-fakers'
+import { useStarWars } from 'react-fakers'
 
 const ResultAllData = () => {
-  const { success, error, loading } = useJsonPlaceHolder()
+  const { success, error, loading } = useStarWars()
 
   if (error) {
     window.alert(error.message)

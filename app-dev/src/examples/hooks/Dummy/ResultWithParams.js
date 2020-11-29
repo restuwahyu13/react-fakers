@@ -11,18 +11,10 @@ const ResultWithParams = () => {
    * more about information please check documentation from DUMMY API
    */
 
-  const [state, setState] = useState(false)
-
-  const { success, error } = useDummy({
+  const { success, error, loading } = useDummy({
     params: { user: { id: '0F8JIqi4zwvb77FGz6Wt', refs: 'post' } },
     options: { limit: 5 }
   })
-
-  useEffect(() => {
-    if (success) {
-      setState(true)
-    }
-  }, [])
 
   if (error) {
     window.alert(error.message)
@@ -30,16 +22,16 @@ const ResultWithParams = () => {
 
   return (
     <>
-      {!state && <h4>Loading....</h4>}
+      {!loading && <h4>Loading....</h4>}
       <h3>Using ID and Reference to POST</h3>
-      {state &&
-        success.map((val, id) => (
-          <ul key={val.id}>
-            <li>
+      <ul>
+        {loading &&
+          success.map((val, id) => (
+            <li key={val.id}>
               {val.id} - {val.text}
             </li>
-          </ul>
-        ))}
+          ))}
+      </ul>
     </>
   )
 }

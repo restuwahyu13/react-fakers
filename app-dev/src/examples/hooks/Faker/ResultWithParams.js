@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useFaker } from 'react-fakers'
 
 const ResultWithParams = () => {
@@ -9,8 +9,7 @@ const ResultWithParams = () => {
    * more about information please check documentation from FAKER
    */
 
-  const [state, setState] = useState(false)
-  const { success, error } = useFaker({
+  const { success, error, loading } = useFaker({
     params: {
       users: {
         quantity: 5,
@@ -19,27 +18,21 @@ const ResultWithParams = () => {
     }
   })
 
-  useEffect(() => {
-    if (success) {
-      setState(true)
-    }
-  }, [])
-
   if (error) {
     window.alert(error.message)
   }
 
   return (
     <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={id}>
-            <li>
+      {!loading && <h4>Loading....</h4>}
+      <ul>
+        {loading &&
+          success.map((val, id) => (
+            <li key={id}>
               {val.firstname} {val.lastname} - {val.email}
             </li>
-          </ul>
-        ))}
+          ))}
+      </ul>
     </>
   )
 }

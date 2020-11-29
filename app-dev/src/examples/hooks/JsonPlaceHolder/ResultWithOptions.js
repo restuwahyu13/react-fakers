@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useJsonPlaceHolder } from 'react-fakers'
 
 const ResultWithOptions = () => {
@@ -6,16 +6,9 @@ const ResultWithOptions = () => {
    * @note You can limit the data displayed using options.limit
    */
 
-  const [state, setState] = useState(false)
-  const { success, error } = useJsonPlaceHolder({
+  const { success, error, loading } = useJsonPlaceHolder({
     options: { limit: 5 }
   })
-
-  useEffect(() => {
-    if (success) {
-      setState(true)
-    }
-  }, [])
 
   if (error) {
     window.alert(error.message)
@@ -23,15 +16,15 @@ const ResultWithOptions = () => {
 
   return (
     <>
-      {!state && <h4>Loading....</h4>}
-      {state &&
-        success.map((val, id) => (
-          <ul key={id}>
-            <li>
+      {!loading && <h4>Loading....</h4>}
+      <ul>
+        {loading &&
+          success.map((val, id) => (
+            <li key={id}>
               {val.name} - {val.email}
             </li>
-          </ul>
-        ))}
+          ))}
+      </ul>
     </>
   )
 }
