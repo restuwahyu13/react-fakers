@@ -25,4 +25,3 @@ build/*.br
 typings/libs
 CONTRIBUTING.md
 .travis.yml
-build/

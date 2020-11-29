@@ -72,10 +72,11 @@ const useStarWars = (props) => {
 
   const onFetch = () => {
     const paramsBindFetch = params && paramsBindRefs({ ...stateParams })
+    const stateParamsRefs = stateParams && stateParams[stateType] && stateParams[stateType].refs
 
     switch (typeof params) {
       case 'object':
-        if (stateParams[stateType].refs) {
+        if (stateParamsRefs) {
           onFetchRefs(paramsBindFetch)
         } else {
           stateParams[stateType] &&
