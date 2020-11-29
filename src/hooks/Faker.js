@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import fetch from 'isomorphic-fetch'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { replaceString } from '../utils/replaceString'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -12,13 +11,14 @@ const useFaker = (props) => {
   const { type, params } = { ...props }
 
   const [values, setValues] = useState({
-    success: [],
+    loading: false,
     error: null,
+    success: [],
     stateType: !type ? 'users' : type,
     stateParams: !params ? {} : params
   })
 
-  const { success, error, stateType, stateParams } = values
+  const { loading, error, success, stateType, stateParams } = values
 
   useEffect(() => {
     onState()
@@ -28,8 +28,9 @@ const useFaker = (props) => {
       if (success.length > 0) {
         setValues({
           ...values,
-          success: [],
+          loading: false,
           error: null,
+          success: [],
           stateType: 'users',
           stateParams: {}
         })
@@ -73,42 +74,40 @@ const useFaker = (props) => {
 
     switch (typeof params) {
       case 'object':
-        fetch(`https://fakerapi.it/api/v1/${stateType}/?${replaceString(paramsBindFetch.value)}`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
-        })
+        window
+          .fetch(`https://fakerapi.it/api/v1/${stateType}/?${replaceString(paramsBindFetch.value)}`, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
           })
-          .then((res) => res && setValues({ ...values, success: res.data }))
-          .catch(
-            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
-          )
+          .then((res) => res && setValues({ ...values, loading: true, success: res.data }))
+          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
         break
       default:
-        fetch(`https://fakerapi.it/api/v1/${stateType}`, {
-          method: 'GET',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          }
-        })
+        window
+          .fetch(`https://fakerapi.it/api/v1/${stateType}`, {
+            method: 'GET',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            }
+          })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
           })
-          .then((res) => res && setValues({ ...values, success: res.data }))
-          .catch(
-            (err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) })
-          )
+          .then((res) => res && setValues({ ...values, loading: true, success: res.data }))
+          .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
     }
   }
 
-  return { success, error }
+  return { success: loading && success, error, loading }
 }
 
 export default useFaker

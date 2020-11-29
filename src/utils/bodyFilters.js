@@ -18,3 +18,16 @@ export const tagFilter = (data, entry) => {
   const tags = tagIndex !== -1 ? data[tagIndex] : []
   return [].concat(tags)
 }
+
+export const swrFilter = (data, entry) => {
+  if (entry) {
+    const filterData = data.map((property) => {
+      if (Object.keys(property).indexOf(entry.refs) !== -1) {
+        return property[entry.refs]
+      }
+      return []
+    })
+    const valueRefs = filterData.flat(Infinity)[entry.id - 1].replace('http://swapi.dev/api/', '')
+    return valueRefs
+  }
+}

@@ -101,7 +101,7 @@ export interface IFakerParams {
 
 export interface IFakerProperty {
   readonly success: () => void
-  readonly error?: () => void
+  readonly error: () => void
   readonly type?: string
   readonly params?: IFakerParams
 }
@@ -156,7 +156,7 @@ export interface IJphOptions {
 
 export interface IJph {
   readonly success: () => void
-  readonly error?: () => void
+  readonly error: () => void
   readonly type?: string
   readonly params?: IJphParams
   readonly options?: IJphOptions
@@ -196,7 +196,7 @@ export interface IDummyParams {
 
 export interface IDummyProperty {
   readonly success: () => void
-  readonly error?: () => void
+  readonly error: () => void
   readonly apiKey?: string
   readonly params?: IDummyParams
   readonly options?: IDummyPropertyOptions
@@ -220,12 +220,45 @@ export interface IFacesParams {
 
 export interface IFacesProperty {
    readonly success: () => void
-   readonly error?: () => void
+   readonly error: () => void
    readonly apiKey?: string
    readonly params?: IFacesParams
 }
 
 export class UIFaces extends Component<IFacesProperty> {}
+
+// =================================================================
+//                   STAR WARS TYPINGS TERITORY
+// =================================================================
+
+export interface IStarWarsParamsOptions {
+  readonly id: number,
+  readonly refs: string
+}
+
+export interface IStarWarsPropertyOptions {
+  readonly limit?: number,
+}
+
+export interface IStarWarsParams {
+  readonly people: IStarWarsParamsOptions
+  readonly films: IStarWarsParamsOptions
+  readonly starships: IStarWarsParamsOptions
+  readonly vehicles: IStarWarsParamsOptions
+  readonly species: IStarWarsParamsOptions
+  readonly planets: IStarWarsParamsOptions
+}
+
+export interface IStarWarsProperty {
+  readonly success: () => void
+  readonly error: () => void
+  readonly type?: string
+  readonly params?: IStarWarsParams
+  readonly options?: IStarWarsPropertyOptions
+  readonly filters?: object
+}
+
+export class StarWars extends Component<IStarWarsProperty> {}
 
 // =================================================================
 //                  HOOKS FAKER TYPINGS TERITORY
@@ -237,8 +270,9 @@ export interface IFakerPropertyHooks {
 }
 
 export interface IFakerHooks {
-  readonly success: []
-  readonly error?: object
+  readonly success: any[]
+  readonly error: object
+  readonly loading: boolean
 }
 
 export function useFaker(inputs: IFakerPropertyHooks) : IFakerHooks {}
@@ -255,8 +289,9 @@ export interface IJphPropertyHooks {
 }
 
 export interface IJphHooks {
-  readonly success: []
-  readonly error?: object
+  readonly success: any[]
+  readonly error: object
+  readonly loading: boolean
 }
 
 export function useJsonPlaceHolder(inputs: IJphPropertyHooks) : IJphHooks {}
@@ -274,8 +309,9 @@ export interface IDummyPropertyHooks {
 }
 
 export interface IDummyHooks {
-  readonly success: []
-  readonly error?: object
+  readonly success: any[]
+  readonly error: object
+  readonly loading: boolean
 }
 
 export function useDummy(inputs: IDummyPropertyHooks) : IDummyHooks {}
@@ -290,11 +326,31 @@ export interface IFacesPropertyHooks {
 }
 
 export interface IFacesHooks {
-  readonly success: []
-  readonly error?: object
+  readonly success: any[]
+  readonly error: object
+  readonly loading: boolean
 }
 
 export function useUIFaces(inputs: IFacesPropertyHooks) : IFacesHooks {}
+
+// =================================================================
+//                  HOOKS STAR WARS TYPINGS TERITORY
+// =================================================================
+
+export interface IStarWarsPropertyHooks {
+  readonly type?: string
+  readonly params?: IStarWarsParams
+  readonly options?: IStarWarsPropertyOptions
+  readonly filters?: object
+}
+
+export interface IStarWarsHooks {
+  readonly success: any[]
+  readonly error: object
+  readonly loading: boolean
+}
+
+export function useStarWars(inputs: IStarWarsPropertyHooks) : IStarWarsHooks {}
 
 // =================================================================
 //                    END REACT FAKERS

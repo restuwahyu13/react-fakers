@@ -5,13 +5,16 @@ export const errorHandlers = (handler) => {
     case 'httpErrorHandlers':
       return httpErrorHandlers(handler)
     default:
-      return null
+      return handler
   }
 }
 
 const propertyHandlers = ({ props }) => {
   if (!props.success) {
-    return { status: 400, message: 'success property is required' }
+    return { message: 'success property is required' }
+  }
+  if (!props.error) {
+    return { message: 'error property is required' }
   }
 }
 

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import fetch from 'isomorphic-fetch'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -12,8 +10,6 @@ import { errorHandlers } from '../utils/errorHandlers'
 
 const JsonPlaceHolder = (props) => {
   const { success, error, type, params, options, filters } = props
-
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
 
   useEffect(() => {
     onCheck()
@@ -43,7 +39,8 @@ const JsonPlaceHolder = (props) => {
 
     switch (typeof params) {
       case 'object':
-        fetch(`https://jsonplaceholder.typicode.com/${type}?${paramsBindFetch.value}`)
+        window
+          .fetch(`https://jsonplaceholder.typicode.com/${type}?${paramsBindFetch.value}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -56,7 +53,7 @@ const JsonPlaceHolder = (props) => {
               fetchData.push(res)
               fetchData && success(fetchData[0])
             } else {
-              const limitData = res && _.slice(res, 0, options.limit)
+              const limitData = res && res.slice(0, options.limit)
               filterCount > 0 && res && fetchData.push(bodyFiltersWithLimit(res, options.limit, filters))
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && success(fetchData[0])
@@ -65,7 +62,8 @@ const JsonPlaceHolder = (props) => {
           .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
         break
       default:
-        fetch(`https://jsonplaceholder.typicode.com/${type}`)
+        window
+          .fetch(`https://jsonplaceholder.typicode.com/${type}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -79,7 +77,7 @@ const JsonPlaceHolder = (props) => {
               filterCount < 1 && res && fetchData.push(res)
               fetchData && success(fetchData[0])
             } else {
-              const limitData = res && _.slice(res, 0, options.limit)
+              const limitData = res && res.slice(0, options.limit)
               filterCount > 0 && res && fetchData.push(bodyFiltersWithLimit(res, options.limit, filters))
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && success(fetchData[0])
@@ -89,7 +87,7 @@ const JsonPlaceHolder = (props) => {
     }
   }
 
-  return <div />
+  return <>{!success && new Error(errorHandlers({ type: 'propertyHandler', props }).message)}</>
 }
 
 JsonPlaceHolder.propTypes = {

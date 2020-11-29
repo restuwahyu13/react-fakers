@@ -16,34 +16,26 @@
     "url": "https://github.com/restuwahyu13/react-fakers.git"
   },
   "keywords": [
-    "react",
-    "react js",
     "faker",
-    "react-fakers",
-    "dummy data",
     "faker js",
-    "json place holder",
+    "fakerjs",
+    "faker-js",
     "fake rest",
-    "fakerest api",
+    "fake rest api",
     "react-faker",
     "react faker",
+    "react-fakers",
     "react fakers"
   ],
   "author": "Restu Wahyu Saputra",
   "bugs": {
     "url": "https://github.com/restuwahyu13/react-fakers/issues"
   },
-  "homepage": "https://github.com/restuwahyu13/react-fakers/blob/main/README.md",
+  "homepage": "https://github.com/restuwahyu13/react-fakers#readme",
   "license": "MIT",
   "dependencies": {
-    "@types/react": ">=16.8.5",
-    "isomorphic-fetch": "^3.0.0",
-    "lodash": "^4.17.20",
+    "@types/react": "^16.14.1",
     "prop-types": "^15.7.2"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.5",
-    "react-dom": ">=16.8.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
@@ -66,7 +58,7 @@
     "@types/react-test-renderer": "*",
     "@types/testing-library__react-hooks": "*",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "*",
+    "babel-loader": "^8.1.0",
     "babel-plugin-minify-dead-code-elimination": "^0.5.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "babel-plugin-transform-remove-strict-mode": "0.0.2",
@@ -74,7 +66,6 @@
     "babel-preset-jest": "^26.6.2",
     "case-sensitive-paths-webpack-plugin": "^2.3.0",
     "clean-webpack-plugin": "^3.0.0",
-    "compression-webpack-plugin": "^6.1.1",
     "core-js": "^3.7.0",
     "cross-env": "^7.0.2",
     "enzyme": "^3.11.0",
@@ -95,17 +86,23 @@
     "eslint-plugin-security": "^1.4.0",
     "husky": "^4.3.0",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^26.6.3",
+    "jest": "^26.6.0",
     "prettier": "^2.1.2",
-    "react": ">=16.8.5",
-    "react-dom": ">=16.8.5",
+    "react": ">=16.13.0",
+    "react-dom": ">=16.13.0",
     "react-test-renderer": "^16.14.0",
     "terser-webpack-plugin": "^4.2.3",
     "unminified-webpack-plugin": "^2.0.0",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.12",
     "webpack-common-shake": "^2.1.0",
-    "webpackbar": "^5.0.0-3"
+    "webpackbar": "^5.0.0-3",
+    "whatwg-fetch": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=10.14",
+    "npm": ">=6",
+    "yarn": ">=1"
   },
   "husky": {
     "hooks": {

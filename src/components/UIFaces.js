@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import fetch from 'isomorphic-fetch'
 import PropTypes from 'prop-types'
 import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -10,8 +9,6 @@ import { errorHandlers } from '../utils/errorHandlers'
 
 const UIFaces = (props) => {
   const { success, error, apiKey, params } = props
-
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
 
   useEffect(() => {
     onFetch()
@@ -24,14 +21,15 @@ const UIFaces = (props) => {
   const onFetch = () => {
     const paramsBindUIFaces = params && paramsBind({ ...params })
 
-    fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
-      method: 'GET',
-      headers: {
-        'X-API-KEY': `${apiKey}`,
-        Accept: 'application/json',
-        'Cache-Control': 'no-cache'
-      }
-    })
+    window
+      .fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
+        method: 'GET',
+        headers: {
+          'X-API-KEY': `${apiKey}`,
+          Accept: 'application/json',
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)
@@ -40,7 +38,7 @@ const UIFaces = (props) => {
       .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
   }
 
-  return <div />
+  return <>{!success && new Error(errorHandlers({ type: 'propertyHandler', props }).message)}</>
 }
 
 UIFaces.propTypes = {

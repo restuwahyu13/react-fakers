@@ -5,13 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const WebpackProgressBar = require('webpackbar')
 const ThreeShakingWebpackPlugin = require('webpack-common-shake').Plugin
 const UnminifiedWebpackPlugin = require('unminified-webpack-plugin')
-const CompressionPlugin = require('compression-webpack-plugin')
 const CaseSensitivePathWebpackPlugin = require('case-sensitive-paths-webpack-plugin')
 
 module.exports = {
   mode: 'production',
   entry: {
-    main: resolve(process.cwd(), 'src/index.js')
+    main: ['whatwg-fetch', resolve(process.cwd(), 'src/index.js')]
   },
   output: {
     filename: 'index.js',
@@ -52,9 +51,9 @@ module.exports = {
                 '@babel/plugin-proposal-optional-chaining',
                 ['@babel/plugin-transform-runtime', { corejs: 3 }]
               ],
+              minified: true,
               cacheDirectory: false,
               comments: false,
-              minified: true,
               babelrc: false
             }
           }
@@ -74,28 +73,7 @@ module.exports = {
     new WebpackProgressBar(),
     new UnminifiedWebpackPlugin(),
     new ThreeShakingWebpackPlugin(),
-    new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['build'] }),
-    new CompressionPlugin({
-      filename: '[path].br[query]',
-      test: /\.js$/,
-      algorithm: 'brotliCompress',
-      compressionOptions: {
-        level: 11,
-        strategy: zlib.constants.Z_RLE
-      },
-      threshold: 5120,
-      minRatio: Number.MAX_SAFE_INTEGER,
-      cache: false,
-      exclude: [
-        '/(node_modules|bower_components)/',
-        '/.(test.js|spec.js)/$',
-        resolve(process.cwd(), 'build/**/*'),
-        resolve(process.cwd(), 'public/**/*'),
-        resolve(process.cwd(), 'webpack/**/*'),
-        resolve(process.cwd(), '.github/**/*'),
-        resolve(process.cwd(), 'coverage/**/*')
-      ]
-    })
+    new CleanWebpackPlugin({ cleanAfterEveryBuildPatterns: ['build'] })
   ],
   optimization: {
     nodeEnv: 'production',

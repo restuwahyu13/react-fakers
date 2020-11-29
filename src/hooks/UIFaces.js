@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import fetch from 'isomorphic-fetch'
 import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
 
@@ -13,11 +12,12 @@ const useUIFaces = (props) => {
   const [values, setValues] = useState({
     success: [],
     error: null,
+    loading: false,
     stateParams: !params ? {} : params,
     stateApiKey: !apiKey ? '43651248-182440F6-8653E4E2-5438FCB2' : apiKey
   })
 
-  const { success, error, stateParams, stateApiKey } = values
+  const { success, error, loading, stateParams, stateApiKey } = values
 
   useEffect(() => {
     onState()
@@ -28,6 +28,7 @@ const useUIFaces = (props) => {
         setValues({
           success: [],
           error: null,
+          loading: false,
           stateParams: {},
           stateApiKey: '43651248-182440F6-8653E4E2-5438FCB2'
         })
@@ -50,23 +51,24 @@ const useUIFaces = (props) => {
   const onFetch = () => {
     const paramsBindUIFaces = paramsBind({ ...stateParams })
 
-    fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
-      method: 'GET',
-      headers: {
-        'X-API-KEY': `${stateApiKey}`,
-        Accept: 'application/json',
-        'Cache-Control': 'no-cache'
-      }
-    })
+    window
+      .fetch(`https://uifaces.co/api?${paramsBindUIFaces}`, {
+        method: 'GET',
+        headers: {
+          'X-API-KEY': `${stateApiKey}`,
+          Accept: 'application/json',
+          'Cache-Control': 'no-cache'
+        }
+      })
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)
       })
-      .then((res) => res && setValues({ ...values, success: res }))
+      .then((res) => res && setValues({ ...values, loading: true, success: res }))
       .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
   }
 
-  return { success, error }
+  return { success: loading && success, error, loading }
 }
 
 export default useUIFaces

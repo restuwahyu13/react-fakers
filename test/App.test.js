@@ -1,6 +1,3 @@
-import React from 'react'
-import { shallow } from 'enzyme'
-import { renderHook, act } from '@testing-library/react-hooks'
 import Faker from '../src/components/Faker'
 import JsonPlaceHolder from '../src/components/JsonPlaceHolder'
 import Dummy from '../src/components/Dummy'
@@ -90,15 +87,11 @@ describe('Hooks Group Test', () => {
   })
 
   it('useJsonPlaceHolder using params', async (done) => {
-    const { result, waitForNextUpdate } = renderHook(() =>
-      useJsonPlaceHolder({ type: 'posts', params: { userId: 1, id: 1 } })
-    )
+    const { result, waitForNextUpdate } = renderHook(() => useJsonPlaceHolder({ type: 'posts', params: { userId: 1, id: 1 } }))
     await act(async () => {
       await waitForNextUpdate()
     })
-    expect(result.current.success[0].title).toEqual(
-      'sunt aut facere repellat provident occaecati excepturi optio reprehenderit'
-    )
+    expect(result.current.success[0].title).toEqual('sunt aut facere repellat provident occaecati excepturi optio reprehenderit')
     done()
   })
 

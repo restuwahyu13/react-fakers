@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react'
-import fetch from 'isomorphic-fetch'
 import propTypes from 'prop-types'
-import _ from 'lodash'
 import { paramsBindDeepRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -12,8 +10,6 @@ import { errorHandlers } from '../utils/errorHandlers'
 
 const Dummy = (props) => {
   const { success, error, type, apiKey, params, options, filters } = props
-
-  error && error(errorHandlers({ type: 'propertyHandler', props }))
 
   useEffect(() => {
     onCheck()
@@ -41,14 +37,15 @@ const Dummy = (props) => {
 
     switch (typeof params) {
       case 'object':
-        fetch(paramsBindFetch.url, {
-          method: 'GET',
-          headers: {
-            'app-id': `${apiKey}`,
-            accept: 'application/json',
-            'content-type': 'application/json'
-          }
-        })
+        window
+          .fetch(paramsBindFetch.url, {
+            method: 'GET',
+            headers: {
+              'app-id': `${apiKey}`,
+              accept: 'application/json',
+              'content-type': 'application/json'
+            }
+          })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -65,7 +62,7 @@ const Dummy = (props) => {
               fetchData && success(fetchData[0])
             } else {
               const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, options.limit, filters)
-              const limitData = res && _.slice(res.data, 0, options.limit)
+              const limitData = res && res.data.slice(0, options.limit)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && success(fetchData[0])
@@ -74,13 +71,14 @@ const Dummy = (props) => {
           .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
         break
       default:
-        fetch(`https://dummyapi.io/data/api/${type}`, {
-          headers: {
-            'app-id': `${apiKey}`,
-            accept: 'application/json',
-            'content-type': 'application/json'
-          }
-        })
+        window
+          .fetch(`https://dummyapi.io/data/api/${type}`, {
+            headers: {
+              'app-id': `${apiKey}`,
+              accept: 'application/json',
+              'content-type': 'application/json'
+            }
+          })
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -96,9 +94,8 @@ const Dummy = (props) => {
                 filterCount < 1 && res && fetchData.push(res.data)
                 fetchData && success(fetchData[0])
               } else {
-                const limitFiltersData =
-                  filterCount > 0 && res && bodyFiltersWithLimit(res.data, options.limit, filters)
-                const limitData = res && _.slice(res.data, 0, options.limit)
+                const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, options.limit, filters)
+                const limitData = res && res.data.slice(res.data, 0, options.limit)
                 limitFiltersData && res && fetchData.push(limitFiltersData)
                 filterCount < 1 && res && fetchData.push(limitData)
                 fetchData && success(fetchData[0])
@@ -110,7 +107,7 @@ const Dummy = (props) => {
               fetchData && success(fetchData[0])
             } else {
               const filtersData = filterCount > 0 && res && tagFilter(res.data, filters)
-              const limitData = res && _.slice(res.data, 0, options.limit)
+              const limitData = res && res.data.slice(0, options.limit)
               filtersData && res && fetchData.push(filtersData)
               filterCount < 1 && res && fetchData.push(limitData)
               fetchData && success(fetchData[0])
@@ -120,7 +117,7 @@ const Dummy = (props) => {
     }
   }
 
-  return <div />
+  return <>{!success && new Error(errorHandlers({ type: 'propertyHandler', props }).message)}</>
 }
 
 Dummy.propTypes = {
