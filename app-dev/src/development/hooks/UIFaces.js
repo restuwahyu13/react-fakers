@@ -3,7 +3,7 @@ import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useUIFaces is a service provider for displaying dummy data
+ * @description useUIFaces is a service provider for displaying dummy data from UI Faces provider
  */
 
 export const useUIFaces = (props) => {

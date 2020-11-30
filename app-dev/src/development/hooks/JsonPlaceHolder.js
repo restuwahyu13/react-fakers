@@ -5,7 +5,7 @@ import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useJsonPlaceHolder is a service provider for displaying dummy data
+ * @description useJsonPlaceHolder is a service provider for displaying dummy data from Json Place Holder provider
  */
 
 export const useJsonPlaceHolder = (props) => {

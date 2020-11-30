@@ -3,25 +3,26 @@ import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useUIFaces is a service provider for displaying dummy data
+ * @description useUIFaces is a service provider for displaying dummy data from UI Faces provider
  */
 
 const useUIFaces = (props) => {
-  const { params, apiKey } = { ...props }
+  const { params, apiKey, effect } = { ...props }
 
   const [values, setValues] = useState({
     success: [],
     error: null,
     loading: false,
     stateParams: !params ? {} : params,
-    stateApiKey: !apiKey ? '43651248-182440F6-8653E4E2-5438FCB2' : apiKey
+    stateApiKey: !apiKey ? '43651248-182440F6-8653E4E2-5438FCB2' : apiKey,
+    stateEffect: !effect ? false : effect
   })
 
-  const { success, error, loading, stateParams, stateApiKey } = values
+  const { success, error, loading, stateParams, stateApiKey, stateEffect } = values
 
   useEffect(() => {
     onState()
-    onFetch()
+    onCheck()
 
     return () => {
       if (success.length > 0) {
@@ -30,7 +31,8 @@ const useUIFaces = (props) => {
           error: null,
           loading: false,
           stateParams: {},
-          stateApiKey: '43651248-182440F6-8653E4E2-5438FCB2'
+          stateApiKey: '43651248-182440F6-8653E4E2-5438FCB2',
+          stateEffect: false
         })
       }
     }
@@ -39,9 +41,32 @@ const useUIFaces = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams,
-      stateApiKey: stateApiKey !== '43651248-182440F6-8653E4E2-5438FCB2' && stateApiKey
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateApiKey: stateApiKey !== '43651248-182440F6-8653E4E2-5438FCB2' ? stateApiKey : '43651248-182440F6-8653E4E2-5438FCB2',
+      stateEffect: stateEffect !== false ? stateEffect : false
     })
+  }
+
+  const onCheck = () => {
+    switch (stateEffect) {
+      case true:
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateEffect) {
+      case false:
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
+        break
+      default:
+        return []
+    }
   }
 
   /**
@@ -67,7 +92,7 @@ const useUIFaces = (props) => {
       .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
 
 export default useUIFaces

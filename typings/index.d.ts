@@ -267,13 +267,14 @@ export class StarWars extends Component<IStarWarsProperty> {}
 export interface IFakerPropertyHooks {
   readonly type?: string
   readonly params?: IFakerParams
+  readonly effect?: boolean
 }
 
 export interface IFakerHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
-  readonly handler: VoidFunction
+  readonly handler: EventListener
 }
 
 export function useFaker(inputs: IFakerPropertyHooks) : IFakerHooks {}
@@ -285,6 +286,7 @@ export function useFaker(inputs: IFakerPropertyHooks) : IFakerHooks {}
 export interface IJphPropertyHooks {
   readonly type?: string
   readonly params?: IJphParams
+  readonly effect?: boolean
   readonly options?: IJphOptions
   readonly filters?: object
 }
@@ -293,7 +295,7 @@ export interface IJphHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
-  readonly handler: VoidFunction
+  readonly handler: EventListener
 }
 
 export function useJsonPlaceHolder(inputs: IJphPropertyHooks) : IJphHooks {}
@@ -306,6 +308,7 @@ export interface IDummyPropertyHooks {
   readonly type?: string
   readonly apiKey?: string
   readonly params?: IDummyParams
+  readonly effect?: boolean
   readonly options?: IDummyPropertyOptions
   readonly filters?: object
 }
@@ -314,7 +317,7 @@ export interface IDummyHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
-  readonly handler: VoidFunction
+  readonly handler: EventListener
 }
 
 export function useDummy(inputs: IDummyPropertyHooks) : IDummyHooks {}
@@ -326,13 +329,14 @@ export function useDummy(inputs: IDummyPropertyHooks) : IDummyHooks {}
 export interface IFacesPropertyHooks {
   readonly apiKey?: string
   readonly params?: IFacesParams
+  readonly effect?: boolean
 }
 
 export interface IFacesHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
-  readonly handler: VoidFunction
+  readonly handler: EventListener
 }
 
 export function useUIFaces(inputs: IFacesPropertyHooks) : IFacesHooks {}
@@ -344,6 +348,7 @@ export function useUIFaces(inputs: IFacesPropertyHooks) : IFacesHooks {}
 export interface IStarWarsPropertyHooks {
   readonly type?: string
   readonly params?: IStarWarsParams
+  readonly effect?: boolean
   readonly options?: IStarWarsPropertyOptions
   readonly filters?: object
 }
@@ -352,7 +357,7 @@ export interface IStarWarsHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
-  readonly handler: VoidFunction
+  readonly handler: EventListener
 }
 
 export function useStarWars(inputs: IStarWarsPropertyHooks) : IStarWarsHooks {}

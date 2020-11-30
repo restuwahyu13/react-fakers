@@ -1,19 +1,19 @@
 import React from 'react'
-// import { useStarWars } from 'react-fakers'
+import { useStarWars } from 'react-fakers'
 // import FakerComponents from './examples/components/Faker'
 // import JsonPlaceHolderComponents from './examples/components/JsonPlaceHolder'
 // import DummyComponents from './examples/components/Dummy'
 // import UIFacesComponents from './examples/components/UIFaces'
 // import { useStarWars } from './development/hooks/StarWars'
-import { useFaker } from './development/hooks/Faker'
-import { useJsonPlaceHolder } from './development/hooks/JsonPlaceHolder'
-import { useDummy } from './development/hooks/Dummy'
-import { useUIFaces } from './development/hooks/UIFaces'
-import { useStarWars } from './development/hooks/StarWars'
+// import { useFaker } from './development/hooks/Faker'
+// import { useJsonPlaceHolder } from './development/hooks/JsonPlaceHolder'
+// import { useDummy } from './development/hooks/Dummy'
+// import { useUIFaces } from './development/hooks/UIFaces'
+// import { useStarWars } from './development/hooks/StarWars'
 
 const App = () => {
   const { success, error, loading, handler } = useStarWars({
-    effect: true
+    effect: false
   })
 
   if (error) {

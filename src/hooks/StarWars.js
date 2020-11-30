@@ -5,11 +5,11 @@ import { bodyFilters, bodyFiltersWithLimit, swrFilter } from '../utils/bodyFilte
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useJsonPlaceHolder is a service provider for displaying dummy data
+ * @description useJsonPlaceHolder is a service provider for displaying dummy data from SWP Provider
  */
 
 const useStarWars = (props) => {
-  const { type, params, options, filters } = { ...props }
+  const { type, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
     success: [],
@@ -17,11 +17,12 @@ const useStarWars = (props) => {
     loading: false,
     stateType: !type ? 'people' : type,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateFilters: !filters ? {} : filters,
     stateOptions: !options ? { limit: 0 } : options
   })
 
-  const { success, error, loading, stateType, stateParams, stateOptions, stateFilters } = values
+  const { success, error, loading, stateType, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
@@ -34,6 +35,7 @@ const useStarWars = (props) => {
           loading: false,
           stateType: 'people',
           stateParams: {},
+          stateEffect: false,
           stateFilters: {},
           stateOptions: { limit: 0 }
         })
@@ -44,10 +46,11 @@ const useStarWars = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'people' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && params,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters,
-      stateOptions: stateOptions.limit !== 0 && stateOptions
+      stateType: stateType !== 'people' ? stateType : 'people',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateFilters: Object.keys(stateFilters).length > 0 ? stateFilters : {},
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 }
     })
   }
 
@@ -59,7 +62,24 @@ const useStarWars = (props) => {
       case 'species':
       case 'starships':
       case 'vehicles':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'films':
+      case 'people':
+      case 'planets':
+      case 'species':
+      case 'starships':
+      case 'vehicles':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -144,7 +164,7 @@ const useStarWars = (props) => {
       .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
 
 export default useStarWars

@@ -5,10 +5,10 @@ import { bodyFilters, bodyFiltersWithLimit, swrFilter } from '../utils/bodyFilte
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useJsonPlaceHolder is a service provider for displaying dummy data
+ * @description useJsonPlaceHolder is a service provider for displaying dummy data from SWP Provider
  */
 
-export const useStarWars = (props) => {
+const useStarWars = (props) => {
   const { type, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
@@ -166,3 +166,5 @@ export const useStarWars = (props) => {
 
   return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
+
+export default useStarWars

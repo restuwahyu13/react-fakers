@@ -5,11 +5,11 @@ import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useJsonPlaceHolder is a service provider for displaying dummy data
+ * @description useJsonPlaceHolder is a service provider for displaying dummy data from Json Place Holder provider
  */
 
 const useJsonPlaceHolder = (props) => {
-  const { type, params, options, filters } = { ...props }
+  const { type, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
     loading: false,
@@ -17,11 +17,12 @@ const useJsonPlaceHolder = (props) => {
     success: [],
     stateType: !type ? 'users' : type,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateFilters: !filters ? {} : filters,
     stateOptions: !options ? { limit: 0 } : options
   })
 
-  const { loading, error, success, stateType, stateParams, stateOptions, stateFilters } = values
+  const { loading, error, success, stateType, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
@@ -35,6 +36,7 @@ const useJsonPlaceHolder = (props) => {
           success: [],
           stateType: 'users',
           stateParams: {},
+          stateEffect: false,
           stateFilters: {},
           stateOptions: { limit: 0 }
         })
@@ -45,10 +47,11 @@ const useJsonPlaceHolder = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'users' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && params,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters,
-      stateOptions: stateOptions.limit !== 0 && stateOptions
+      stateType: stateType !== 'users' ? stateType : 'users',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateFilters: Object.keys(stateFilters).length > 0 ? stateFilters : {},
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 }
     })
   }
 
@@ -60,7 +63,24 @@ const useJsonPlaceHolder = (props) => {
       case 'photos':
       case 'todos':
       case 'users':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'posts':
+      case 'comments':
+      case 'albums':
+      case 'photos':
+      case 'todos':
+      case 'users':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -137,7 +157,7 @@ const useJsonPlaceHolder = (props) => {
     }
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
 
 export default useJsonPlaceHolder

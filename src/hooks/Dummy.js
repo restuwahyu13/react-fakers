@@ -5,11 +5,11 @@ import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilte
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useDummy is a service provider for displaying dummy data
+ * @description useDummy is a service provider for displaying dummy data from Dummy API provier
  */
 
 const useDummy = (props) => {
-  const { type, apiKey, params, options, filters } = { ...props }
+  const { type, apiKey, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
     loading: false,
@@ -18,11 +18,12 @@ const useDummy = (props) => {
     stateType: !type ? 'user' : type,
     stateApiKey: !apiKey ? '5faa1fab5317ae96860c0be3' : apiKey,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateOptions: !options ? { limit: 0 } : options,
     stateFilters: !filters ? {} : filters
   })
 
-  const { loading, error, success, stateType, stateApiKey, stateParams, stateOptions, stateFilters } = values
+  const { loading, error, success, stateType, stateApiKey, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
@@ -36,6 +37,7 @@ const useDummy = (props) => {
           success: [],
           stateType: 'user',
           stateParams: {},
+          stateEffect: false,
           stateApiKey: '5faa1fab5317ae96860c0be3',
           stateOptions: { limit: 0 },
           stateFilters: {}
@@ -47,11 +49,12 @@ const useDummy = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'user' && stateType,
-      stateApiKey: stateApiKey !== '5faa1fab5317ae96860c0be3' && stateApiKey,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams,
-      stateOptions: stateOptions.limit !== 0 && stateOptions,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters
+      stateType: stateType !== 'user' ? stateType : 'user',
+      stateApiKey: stateApiKey !== '5faa1fab5317ae96860c0be3' ? stateApiKey : '5faa1fab5317ae96860c0be3',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 },
+      stateFilters: Object.keys(stateFilters).length > 1 ? stateFilters : {}
     })
   }
 
@@ -60,7 +63,21 @@ const useDummy = (props) => {
       case 'user':
       case 'post':
       case 'tag':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'user':
+      case 'post':
+      case 'tag':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -156,7 +173,7 @@ const useDummy = (props) => {
     }
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
 
 export default useDummy

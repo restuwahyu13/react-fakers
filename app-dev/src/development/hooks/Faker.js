@@ -5,7 +5,7 @@ import { replaceString } from '../utils/replaceString'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useFaker is a service provider for displaying dummy data
+ * @description useFaker is a service provider for displaying dummy data from Faker provider
  */
 
 export const useFaker = (props) => {

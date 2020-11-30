@@ -5,7 +5,7 @@ import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilte
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useDummy is a service provider for displaying dummy data
+ * @description useDummy is a service provider for displaying dummy data from Dummy API provier
  */
 
 export const useDummy = (props) => {

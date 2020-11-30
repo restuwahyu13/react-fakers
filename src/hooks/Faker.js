@@ -5,21 +5,22 @@ import { replaceString } from '../utils/replaceString'
 import { errorHandlers } from '../utils/errorHandlers'
 
 /**
- * @description useFaker is a service provider for displaying dummy data
+ * @description useFaker is a service provider for displaying dummy data from Faker provider
  */
 
 const useFaker = (props) => {
-  const { type, params } = { ...props }
+  const { effect, type, params } = { ...props }
 
   const [values, setValues] = useState({
     loading: false,
     error: null,
     success: [],
     stateType: !type ? 'users' : type,
-    stateParams: !params ? {} : params
+    stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect
   })
 
-  const { loading, error, success, stateType, stateParams } = values
+  const { loading, error, success, stateEffect, stateType, stateParams } = values
 
   useEffect(() => {
     onState()
@@ -33,7 +34,8 @@ const useFaker = (props) => {
           error: null,
           success: [],
           stateType: 'users',
-          stateParams: {}
+          stateParams: {},
+          stateEffect: false
         })
       }
     }
@@ -42,8 +44,9 @@ const useFaker = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'users' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams
+      stateType: stateType !== 'users' ? stateType : 'users',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false
     })
   }
 
@@ -59,7 +62,28 @@ const useFaker = (props) => {
       case 'products':
       case 'texts':
       case 'users':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'addresses':
+      case 'books':
+      case 'companies':
+      case 'credit_cards':
+      case 'images':
+      case 'persons':
+      case 'places':
+      case 'products':
+      case 'texts':
+      case 'users':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -106,7 +130,7 @@ const useFaker = (props) => {
     }
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
 
 export default useFaker
