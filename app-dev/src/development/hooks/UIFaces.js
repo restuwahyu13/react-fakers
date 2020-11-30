@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import fetch from 'isomorphic-fetch'
 import { paramsBind } from '../utils/paramsBind'
 import { errorHandlers } from '../utils/errorHandlers'
 
@@ -8,28 +7,32 @@ import { errorHandlers } from '../utils/errorHandlers'
  */
 
 export const useUIFaces = (props) => {
-  const { params, apiKey } = { ...props }
+  const { params, apiKey, effect } = { ...props }
 
   const [values, setValues] = useState({
     success: [],
     error: null,
+    loading: false,
     stateParams: !params ? {} : params,
-    stateApiKey: !apiKey ? '43651248-182440F6-8653E4E2-5438FCB2' : apiKey
+    stateApiKey: !apiKey ? '43651248-182440F6-8653E4E2-5438FCB2' : apiKey,
+    stateEffect: !effect ? false : effect
   })
 
-  const { success, error, stateParams, stateApiKey } = values
+  const { success, error, loading, stateParams, stateApiKey, stateEffect } = values
 
   useEffect(() => {
     onState()
-    onFetch()
+    onCheck()
 
     return () => {
       if (success.length > 0) {
         setValues({
           success: [],
           error: null,
+          loading: false,
           stateParams: {},
-          stateApiKey: '43651248-182440F6-8653E4E2-5438FCB2'
+          stateApiKey: '43651248-182440F6-8653E4E2-5438FCB2',
+          stateEffect: false
         })
       }
     }
@@ -38,9 +41,32 @@ export const useUIFaces = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams,
-      stateApiKey: stateApiKey !== '43651248-182440F6-8653E4E2-5438FCB2' && stateApiKey
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateApiKey: stateApiKey !== '43651248-182440F6-8653E4E2-5438FCB2' ? stateApiKey : '43651248-182440F6-8653E4E2-5438FCB2',
+      stateEffect: stateEffect !== false ? stateEffect : false
     })
+  }
+
+  const onCheck = () => {
+    switch (stateEffect) {
+      case true:
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateEffect) {
+      case false:
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
+        break
+      default:
+        return []
+    }
   }
 
   /**
@@ -62,9 +88,9 @@ export const useUIFaces = (props) => {
         if (res.ok) return res.json()
         return Promise.reject(res)
       })
-      .then((res) => res && setValues({ ...values, success: res }))
+      .then((res) => res && setValues({ ...values, loading: true, success: res }))
       .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
   }
 
-  return { success, error }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }

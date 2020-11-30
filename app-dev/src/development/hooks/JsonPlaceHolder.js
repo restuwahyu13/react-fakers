@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import fetch from 'isomorphic-fetch'
-import _ from 'lodash'
 import { paramsBindDeep } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -10,29 +9,34 @@ import { errorHandlers } from '../utils/errorHandlers'
  */
 
 export const useJsonPlaceHolder = (props) => {
-  const { type, params, options, filters } = { ...props }
+  const { type, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
-    success: [],
+    loading: false,
     error: null,
+    success: [],
     stateType: !type ? 'users' : type,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateFilters: !filters ? {} : filters,
     stateOptions: !options ? { limit: 0 } : options
   })
 
-  const { success, error, stateType, stateParams, stateOptions, stateFilters } = values
+  const { loading, error, success, stateType, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
     onCheck()
+
     return () => {
       if (success.length > 0) {
         setValues({
-          success: [],
+          loading: false,
           error: null,
+          success: [],
           stateType: 'users',
           stateParams: {},
+          stateEffect: false,
           stateFilters: {},
           stateOptions: { limit: 0 }
         })
@@ -43,10 +47,11 @@ export const useJsonPlaceHolder = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'users' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && params,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters,
-      stateOptions: stateOptions.limit !== 0 && stateOptions
+      stateType: stateType !== 'users' ? stateType : 'users',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateFilters: Object.keys(stateFilters).length > 0 ? stateFilters : {},
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 }
     })
   }
 
@@ -58,7 +63,24 @@ export const useJsonPlaceHolder = (props) => {
       case 'photos':
       case 'todos':
       case 'users':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'posts':
+      case 'comments':
+      case 'albums':
+      case 'photos':
+      case 'todos':
+      case 'users':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -91,13 +113,13 @@ export const useJsonPlaceHolder = (props) => {
 
             if (stateOptions.limit === 0) {
               res && fetchData.push(res)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             } else {
               const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
-              const limitData = res && _.slice(res, 0, stateOptions.limit)
+              const limitData = res && res.slice(0, stateOptions.limit)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             }
           })
           .catch((err) => setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
@@ -122,18 +144,18 @@ export const useJsonPlaceHolder = (props) => {
               const filtersData = filterCount > 0 && res && bodyFilters(res, stateFilters)
               filtersData && res && fetchData.push(filtersData)
               filterCount < 1 && res && fetchData.push(res)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             } else {
               const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res, stateOptions.limit, stateFilters)
-              const limitData = res && _.slice(res, 0, stateOptions.limit)
+              const limitData = res && res.slice(0, stateOptions.limit)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             }
           })
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
     }
   }
 
-  return { success, error }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }

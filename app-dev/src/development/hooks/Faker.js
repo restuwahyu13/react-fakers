@@ -9,16 +9,18 @@ import { errorHandlers } from '../utils/errorHandlers'
  */
 
 export const useFaker = (props) => {
-  const { type, params } = { ...props }
+  const { effect, type, params } = { ...props }
 
   const [values, setValues] = useState({
-    success: [],
+    loading: false,
     error: null,
+    success: [],
     stateType: !type ? 'users' : type,
-    stateParams: !params ? {} : params
+    stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect
   })
 
-  const { success, error, stateType, stateParams } = values
+  const { loading, error, success, stateEffect, stateType, stateParams } = values
 
   useEffect(() => {
     onState()
@@ -28,10 +30,12 @@ export const useFaker = (props) => {
       if (success.length > 0) {
         setValues({
           ...values,
-          success: [],
+          loading: false,
           error: null,
+          success: [],
           stateType: 'users',
-          stateParams: {}
+          stateParams: {},
+          stateEffect: false
         })
       }
     }
@@ -40,8 +44,9 @@ export const useFaker = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'users' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams
+      stateType: stateType !== 'users' ? stateType : 'users',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false
     })
   }
 
@@ -57,7 +62,28 @@ export const useFaker = (props) => {
       case 'products':
       case 'texts':
       case 'users':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'addresses':
+      case 'books':
+      case 'companies':
+      case 'credit_cards':
+      case 'images':
+      case 'persons':
+      case 'places':
+      case 'products':
+      case 'texts':
+      case 'users':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -84,7 +110,7 @@ export const useFaker = (props) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
           })
-          .then((res) => res && setValues({ ...values, success: res.data }))
+          .then((res) => res && setValues({ ...values, loading: true, success: res.data }))
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
         break
       default:
@@ -99,10 +125,10 @@ export const useFaker = (props) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
           })
-          .then((res) => res && setValues({ ...values, success: res.data }))
+          .then((res) => res && setValues({ ...values, loading: true, success: res.data }))
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
     }
   }
 
-  return { success, error }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }

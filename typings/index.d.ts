@@ -273,6 +273,7 @@ export interface IFakerHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
+  readonly handler: VoidFunction
 }
 
 export function useFaker(inputs: IFakerPropertyHooks) : IFakerHooks {}
@@ -292,6 +293,7 @@ export interface IJphHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
+  readonly handler: VoidFunction
 }
 
 export function useJsonPlaceHolder(inputs: IJphPropertyHooks) : IJphHooks {}
@@ -312,6 +314,7 @@ export interface IDummyHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
+  readonly handler: VoidFunction
 }
 
 export function useDummy(inputs: IDummyPropertyHooks) : IDummyHooks {}
@@ -329,6 +332,7 @@ export interface IFacesHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
+  readonly handler: VoidFunction
 }
 
 export function useUIFaces(inputs: IFacesPropertyHooks) : IFacesHooks {}
@@ -348,6 +352,7 @@ export interface IStarWarsHooks {
   readonly success: any[]
   readonly error: object
   readonly loading: boolean
+  readonly handler: VoidFunction
 }
 
 export function useStarWars(inputs: IStarWarsPropertyHooks) : IStarWarsHooks {}

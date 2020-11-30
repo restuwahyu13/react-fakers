@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import fetch from 'isomorphic-fetch'
-import _ from 'lodash'
 import { paramsBindDeepRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, tagFilter } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -10,19 +9,21 @@ import { errorHandlers } from '../utils/errorHandlers'
  */
 
 export const useDummy = (props) => {
-  const { type, apiKey, params, options, filters } = { ...props }
+  const { type, apiKey, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
-    success: [],
+    loading: false,
     error: null,
+    success: [],
     stateType: !type ? 'user' : type,
     stateApiKey: !apiKey ? '5faa1fab5317ae96860c0be3' : apiKey,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateOptions: !options ? { limit: 0 } : options,
     stateFilters: !filters ? {} : filters
   })
 
-  const { success, error, stateType, stateApiKey, stateParams, stateOptions, stateFilters } = values
+  const { loading, error, success, stateType, stateApiKey, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
@@ -31,10 +32,12 @@ export const useDummy = (props) => {
     return () => {
       if (success.length > 0) {
         setValues({
-          success: [],
+          loading: false,
           error: null,
+          success: [],
           stateType: 'user',
           stateParams: {},
+          stateEffect: false,
           stateApiKey: '5faa1fab5317ae96860c0be3',
           stateOptions: { limit: 0 },
           stateFilters: {}
@@ -46,11 +49,12 @@ export const useDummy = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'user' && stateType,
-      stateApiKey: stateApiKey !== '5faa1fab5317ae96860c0be3' && stateApiKey,
-      stateParams: Object.keys(stateParams).length < 1 && stateParams,
-      stateOptions: stateOptions.limit !== 0 && stateOptions,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters
+      stateType: stateType !== 'user' ? stateType : 'user',
+      stateApiKey: stateApiKey !== '5faa1fab5317ae96860c0be3' ? stateApiKey : '5faa1fab5317ae96860c0be3',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 },
+      stateFilters: Object.keys(stateFilters).length > 1 ? stateFilters : {}
     })
   }
 
@@ -59,7 +63,21 @@ export const useDummy = (props) => {
       case 'user':
       case 'post':
       case 'tag':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'user':
+      case 'post':
+      case 'tag':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -93,17 +111,17 @@ export const useDummy = (props) => {
             const filterCount = Object.keys(stateFilters).length
 
             if (stateOptions.limit === 0) {
-              const data = !res.data ? [].concat(res) : res.data
+              const dataBody = !res.data ? [].concat(res) : res.data
               const filtersData = filterCount > 0 && res && bodyFilters(res.data, stateFilters)
               filtersData && res && fetchData.push(filtersData)
-              filterCount < 1 && res && fetchData.push(data)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              filterCount < 1 && res && fetchData.push(dataBody)
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             } else {
-              const limitData = res && _.slice(res.data, 0, stateOptions.limit)
+              const limitData = res && res.data.slice(0, stateOptions.limit)
               const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, stateOptions.limit, stateFilters)
               limitFiltersData && res && fetchData.push(limitFiltersData)
               filterCount < 1 && res && fetchData.push(limitData)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             }
           })
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
@@ -129,30 +147,31 @@ export const useDummy = (props) => {
                 const filtersData = filterCount > 0 && res && bodyFilters(res.data, stateFilters)
                 filtersData && res && fetchData.push(filtersData)
                 filterCount < 1 && res && fetchData.push(res.data)
-                fetchData && setValues({ ...values, success: fetchData[0] })
+                fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
               } else {
-                const limitFiltersData = filterCount > 0 && res && bodyFiltersWithLimit(res.data, stateOptions.limit, stateFilters)
-                const limitData = res && _.slice(res.data, 0, stateOptions.limit)
+                const limitFiltersData =
+                  filterCount > 0 && res && bodyFiltersWithLimit(res.data, stateOptions.limit, stateFilters)
+                const limitData = res && res.data.slice(0, stateOptions.limit)
                 limitFiltersData && res && fetchData.push(limitFiltersData)
                 filterCount < 1 && res && fetchData.push(limitData)
-                fetchData && setValues({ ...values, success: fetchData[0] })
+                fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
               }
             } else if (stateOptions.limit === 0) {
               const filtersData = filterCount > 0 && res && tagFilter(res.data, stateFilters)
               filtersData && res && fetchData.push(filtersData)
               filterCount < 1 && res && fetchData.push(res.data)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             } else {
               const filtersData = filterCount > 0 && res && tagFilter(res.data, stateFilters)
-              const limitData = res && _.slice(res.data, 0, stateOptions.limit)
+              const limitData = res && res.data.slice(0, stateOptions.limit)
               filtersData && res && fetchData.push(filtersData)
               filterCount < 1 && res && fetchData.push(limitData)
-              fetchData && setValues({ ...values, success: fetchData[0] })
+              fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
             }
           })
           .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
     }
   }
 
-  return { success, error }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }

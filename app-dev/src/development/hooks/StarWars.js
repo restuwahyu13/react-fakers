@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import fetch from 'isomorphic-fetch'
 import { paramsBindRefs } from '../utils/paramsBind'
 import { bodyFilters, bodyFiltersWithLimit, swrFilter } from '../utils/bodyFilters'
 import { errorHandlers } from '../utils/errorHandlers'
@@ -8,7 +9,7 @@ import { errorHandlers } from '../utils/errorHandlers'
  */
 
 export const useStarWars = (props) => {
-  const { type, params, options, filters } = { ...props }
+  const { type, params, effect, options, filters } = { ...props }
 
   const [values, setValues] = useState({
     success: [],
@@ -16,11 +17,12 @@ export const useStarWars = (props) => {
     loading: false,
     stateType: !type ? 'people' : type,
     stateParams: !params ? {} : params,
+    stateEffect: !effect ? false : effect,
     stateFilters: !filters ? {} : filters,
     stateOptions: !options ? { limit: 0 } : options
   })
 
-  const { success, error, loading, stateType, stateParams, stateOptions, stateFilters } = values
+  const { success, error, loading, stateType, stateParams, stateEffect, stateOptions, stateFilters } = values
 
   useEffect(() => {
     onState()
@@ -33,6 +35,7 @@ export const useStarWars = (props) => {
           loading: false,
           stateType: 'people',
           stateParams: {},
+          stateEffect: false,
           stateFilters: {},
           stateOptions: { limit: 0 }
         })
@@ -43,10 +46,11 @@ export const useStarWars = (props) => {
   const onState = () => {
     setValues({
       ...values,
-      stateType: stateType !== 'people' && stateType,
-      stateParams: Object.keys(stateParams).length < 1 && params,
-      stateFilters: Object.keys(stateFilters).length < 1 && stateFilters,
-      stateOptions: stateOptions.limit !== 0 && stateOptions
+      stateType: stateType !== 'people' ? stateType : 'people',
+      stateParams: Object.keys(stateParams).length > 0 ? stateParams : {},
+      stateEffect: stateEffect !== false ? stateEffect : false,
+      stateFilters: Object.keys(stateFilters).length > 0 ? stateFilters : {},
+      stateOptions: stateOptions.limit !== 0 ? stateOptions : { limit: 0 }
     })
   }
 
@@ -58,7 +62,24 @@ export const useStarWars = (props) => {
       case 'species':
       case 'starships':
       case 'vehicles':
-        onFetch()
+        stateEffect && onFetch()
+        break
+      default:
+        return []
+    }
+  }
+
+  const onHandler = () => {
+    window.addEventListener('submit', (e) => e.preventDefault())
+    switch (stateType) {
+      case 'films':
+      case 'people':
+      case 'planets':
+      case 'species':
+      case 'starships':
+      case 'vehicles':
+        !stateEffect && onFetch()
+        window.removeEventListener('submit', (e) => e.preventDefault())
         break
       default:
         return []
@@ -71,15 +92,15 @@ export const useStarWars = (props) => {
 
   const onFetch = () => {
     const paramsBindFetch = params && paramsBindRefs({ ...stateParams })
+    const stateParamsRefs = stateParams && stateParams[stateType] && stateParams[stateType].refs
 
     switch (typeof params) {
       case 'object':
-        if (stateParams[stateType].refs) {
+        if (stateParamsRefs) {
           onFetchRefs(paramsBindFetch)
         } else {
           stateParams[stateType] &&
-            window
-              .fetch(`https://swapi.dev/api/${stateType}/${paramsBindFetch.id}`)
+            fetch(`https://swapi.dev/api/${stateType}/${paramsBindFetch.id}`)
               .then((res) => {
                 if (res.ok) return res.json()
                 return Promise.reject(res)
@@ -94,12 +115,11 @@ export const useStarWars = (props) => {
                 filterCount < 1 && res && fetchData.push(data)
                 fetchData && setValues({ ...values, loading: true, success: fetchData[0] })
               })
-              .catch((err) => err && error(errorHandlers({ type: 'httpErrorHandlers', error: err })))
+              .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
         }
         break
       default:
-        window
-          .fetch(`https://swapi.dev/api/${stateType}`)
+        fetch(`https://swapi.dev/api/${stateType}`)
           .then((res) => {
             if (res.ok) return res.json()
             return Promise.reject(res)
@@ -126,8 +146,7 @@ export const useStarWars = (props) => {
   }
 
   const onFetchRefs = (paramsRefs) => {
-    window
-      .fetch(`https://swapi.dev/api/${paramsRefs.refs}/${paramsRefs.id}`)
+    fetch(`https://swapi.dev/api/${paramsRefs.refs}/${paramsRefs.id}`)
       .then((res) => {
         if (res.ok) return res.json()
         return Promise.reject(res)
@@ -145,5 +164,5 @@ export const useStarWars = (props) => {
       .catch((err) => err && setValues({ ...values, error: errorHandlers({ type: 'httpErrorHandlers', error: err }) }))
   }
 
-  return { success: loading && success, error, loading }
+  return { success: loading && success, handler: !stateEffect ? onHandler : (e) => e.preventDefault(), error, loading }
 }
