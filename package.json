@@ -34,7 +34,7 @@
   "homepage": "https://github.com/restuwahyu13/react-fakers#readme",
   "license": "MIT",
   "dependencies": {
-    "@types/react": "^16.14.1",
+    "@types/react": "^16.14.2",
     "isomorphic-fetch": "^3.0.0",
     "prop-types": "^15.7.2"
   },
