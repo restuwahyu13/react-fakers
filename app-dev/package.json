@@ -5,7 +5,7 @@
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
     "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.2.0",
+    "@testing-library/user-event": "^12.7.1",
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
